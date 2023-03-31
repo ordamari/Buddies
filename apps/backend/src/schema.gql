@@ -1,0 +1,55 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Comment {
+  id: ID!
+  text: String!
+  post: Post!
+}
+
+type Post {
+  id: ID!
+  text: String!
+  comments: [Comment!]!
+}
+
+type User {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  posts: [Post!]!
+  post(id: ID!): Post!
+  users: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput!): Post!
+  updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
+  removePost(id: ID!): Post!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
+  removeUser(id: ID!): User!
+}
+
+input CreatePostInput {
+  text: String!
+}
+
+input UpdatePostInput {
+  text: String
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
