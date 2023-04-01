@@ -1,6 +1,11 @@
+import { InputType } from '@nestjs/graphql';
 import { IsEmail, MinLength } from 'class-validator';
 
-export class CreateUserInput {
+/**
+ * Sign in data
+ */
+@InputType()
+export class SignInInput {
   /**
    * @Description Email address of the user
    */
@@ -8,8 +13,8 @@ export class CreateUserInput {
   email: string;
 
   /**
-   * @Description Encrypted password of the user
+   * @Description Password of the user
    */
   @MinLength(8)
-  encryptedPassword: string;
+  password: string;
 }

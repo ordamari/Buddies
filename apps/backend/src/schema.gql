@@ -15,24 +15,22 @@ type Post {
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  email: String!
+  password: String!
 }
 
 type Query {
   posts: [Post!]!
   post(id: ID!): Post!
-  users: [User!]!
-  user(id: Int!): User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
-  removeUser(id: ID!): User!
+  signIn(signInInput: SignInInput!): Boolean!
+  signUp(signUpInput: SignUpInput!): User!
 }
 
 input CreatePostInput {
@@ -43,13 +41,12 @@ input UpdatePostInput {
   text: String
 }
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input SignInInput {
+  email: String!
+  password: String!
 }
 
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input SignUpInput {
+  email: String!
+  password: String!
 }
