@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import jwtConfig from 'src/iam/config/jwt.config';
 import { SignInInput } from 'src/iam/dto/sign-in.input';
 import { SignUpInput } from 'src/iam/dto/sign-up.input';
+import { ActiveUserData } from 'src/iam/interfaces/active-user-data.interface';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/services/users/users.service';
 import { Repository } from 'typeorm';
@@ -55,7 +56,7 @@ export class AuthenticationService {
       {
         sub: user.id,
         email: user.email,
-      },
+      } as ActiveUserData,
       {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
