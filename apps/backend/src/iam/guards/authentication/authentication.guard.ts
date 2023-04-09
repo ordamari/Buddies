@@ -26,6 +26,11 @@ export class AuthenticationGuard implements CanActivate {
     [AuthType.None]: { canActivate: () => true },
   };
 
+  /**
+   *  This Guard is used to verify the access token or no authentication is required
+   * @param context Execution context
+   * @returns True if the access token is valid or no authentication is required
+   */
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const authTypes = this.reflector.getAllAndOverride<AuthType[]>(
       AUTH_TYPE_KEY,

@@ -22,6 +22,11 @@ export class AccessTokenGuard implements CanActivate {
   @Inject(jwtConfig.KEY)
   private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
 
+  /**
+   * This Guard is used to verify the access token
+   * @param context Execution context
+   * @returns True if access token is valid
+   */
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req as Request;
@@ -39,6 +44,10 @@ export class AccessTokenGuard implements CanActivate {
     return true;
   }
 
+  /**
+   * @param request Request
+   * @returns the access token from the request
+   */
   private extractTokenFromRequest(request: Request) {
     const token = request.cookies[COOKIES_ACCESS_TOKEN_KEY];
     return token;
