@@ -1,7 +1,6 @@
 import { UserInputError } from '@nestjs/apollo';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { pgUniqueConstraintError } from 'src/common/Strings';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -24,9 +23,6 @@ export class UsersService {
       });
       return this.userRepository.save(user);
     } catch (err) {
-      if (err.code === pgUniqueConstraintError) {
-        throw new UserInputError('This email is already in use');
-      }
       throw err;
     }
   }

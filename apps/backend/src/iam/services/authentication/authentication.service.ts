@@ -1,6 +1,9 @@
 import { UserInputError } from '@nestjs/apollo';
 import { Inject, Injectable } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import jwtConfig from 'src/iam/config/jwt.config';
 import { SignInInput } from 'src/iam/dto/sign-in.input';
 import { SignUpInput } from 'src/iam/dto/sign-up.input';
 import { User } from 'src/users/entities/user.entity';
@@ -14,6 +17,10 @@ export class AuthenticationService {
   private readonly hashingService!: HashingService;
   @Inject(UsersService)
   private readonly usersService!: UsersService;
+  @Inject(JwtService)
+  private readonly jwtService!: JwtService;
+  @Inject(jwtConfig.KEY)
+  private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
 
   /**
    * Signs up a user
@@ -30,6 +37,11 @@ export class AuthenticationService {
     });
   }
 
+  /**
+   * Signs in a user
+   * @param signInInput Email, and password of the user
+   * @returns JWT token
+   */
   async signIn(signInInput: SignInInput) {
     const user = await this.usersService.findByEmail(signInInput.email);
     const isPasswordCorrect = await this.hashingService.compare(
@@ -39,6 +51,17 @@ export class AuthenticationService {
     if (!isPasswordCorrect) {
       throw new UserInputError('Incorrect password');
     }
-    return true;
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+      },
+    );
+    return accessToken;
   }
 }
