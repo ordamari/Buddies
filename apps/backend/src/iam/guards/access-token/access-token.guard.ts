@@ -10,10 +10,8 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import jwtConfig from 'src/iam/config/jwt.config';
-import {
-  COOKIES_ACCESS_TOKEN_KEY,
-  REQUEST_USER_KEY,
-} from 'src/iam/iam.constants';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
+import { AuthenticationService } from 'src/iam/services/authentication/authentication.service';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
@@ -21,6 +19,8 @@ export class AccessTokenGuard implements CanActivate {
   private readonly jwtService!: JwtService;
   @Inject(jwtConfig.KEY)
   private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
+  @Inject(AuthenticationService)
+  private readonly authenticationService!: AuthenticationService;
 
   /**
    * This Guard is used to verify the access token
@@ -30,26 +30,14 @@ export class AccessTokenGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req as Request;
-    const token = this.extractTokenFromRequest(request);
+    const token = this.authenticationService.extractTokenFromRequest(request);
     if (!token) throw new UserInputError('No access token provided');
-    try {
-      const payload = await this.jwtService.verifyAsync(
-        token,
-        this.jwtConfiguration,
-      );
-      request[REQUEST_USER_KEY] = payload;
-    } catch (e) {
-      throw new UserInputError('Invalid access token');
-    }
+    const payload = await this.jwtService
+      .verifyAsync(token, this.jwtConfiguration)
+      .catch(() => {
+        throw new UserInputError('Invalid access token');
+      });
+    request[REQUEST_USER_KEY] = payload;
     return true;
-  }
-
-  /**
-   * @param request Request
-   * @returns the access token from the request
-   */
-  private extractTokenFromRequest(request: Request) {
-    const token = request.cookies[COOKIES_ACCESS_TOKEN_KEY];
-    return token;
   }
 }

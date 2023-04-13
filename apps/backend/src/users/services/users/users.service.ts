@@ -41,4 +41,17 @@ export class UsersService {
     }
     return user;
   }
+
+  /**
+   * Get a user by Id
+   * @param id Id of the user
+   * @returns The user with the given id
+   */
+  async findById(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new UserInputError('This email is not registered');
+    }
+    return user;
+  }
 }

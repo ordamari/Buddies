@@ -20,6 +20,16 @@ type User {
   password: String!
 }
 
+type TokenExpiresData {
+  refreshTokenExpires: DateTime!
+  accessTokenExpires: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   posts: [Post!]!
   post(id: ID!): Post!
@@ -29,8 +39,9 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  signIn(signInInput: SignInInput!): Boolean!
+  signIn(signInInput: SignInInput!): TokenExpiresData!
   signUp(signUpInput: SignUpInput!): User!
+  refreshToken: TokenExpiresData!
 }
 
 input CreatePostInput {
