@@ -21,7 +21,7 @@ import { User } from 'src/users/entities/user.entity';
 @Resolver()
 export class AuthenticationResolver {
   @Inject(AuthenticationService)
-  private readonly authenticationService!: AuthenticationService;
+  private readonly authService!: AuthenticationService;
   @Inject(jwtConfig.KEY)
   private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
 
@@ -35,8 +35,8 @@ export class AuthenticationResolver {
       refreshToken,
       refreshTokenExpires,
       accessTokenExpires,
-    } = await this.authenticationService.signIn(signInInput);
-    this.authenticationService.setTokensCookie(ctx, accessToken, refreshToken);
+    } = await this.authService.signIn(signInInput);
+    this.authService.setTokensCookie(ctx, accessToken, refreshToken);
     return {
       refreshTokenExpires,
       accessTokenExpires,
@@ -45,13 +45,13 @@ export class AuthenticationResolver {
 
   @Mutation(() => User)
   async signUp(@Args('signUpInput') signUpInput: SignUpInput) {
-    return this.authenticationService.signUp(signUpInput);
+    return this.authService.signUp(signUpInput);
   }
 
   @Mutation(() => TokenExpiresData)
   async refreshToken(@Context() context: any) {
     const request = context.req as Request;
-    const oldRefreshToken = this.authenticationService.extractTokenFromRequest(
+    const oldRefreshToken = this.authService.extractTokenFromRequest(
       request,
       COOKIES_REFRESH_TOKEN_KEY,
     );
@@ -60,13 +60,9 @@ export class AuthenticationResolver {
       refreshToken,
       refreshTokenExpires,
       accessTokenExpires,
-    } = await this.authenticationService.refreshTokens(oldRefreshToken);
+    } = await this.authService.refreshTokens(oldRefreshToken);
 
-    this.authenticationService.setTokensCookie(
-      context,
-      accessToken,
-      refreshToken,
-    );
+    this.authService.setTokensCookie(context, accessToken, refreshToken);
     return {
       refreshTokenExpires,
       accessTokenExpires,
