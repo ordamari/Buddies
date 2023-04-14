@@ -22,14 +22,7 @@ export class AccessTokenGuard implements CanActivate {
   @Inject(AuthenticationService)
   private readonly authenticationService!: AuthenticationService;
 
-  /**
-   * This Guard is used to verify the access token
-   * @param context Execution context
-   * @returns True if access token is valid
-   */
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req as Request;
+  async SetUserInfoInRequest(request: Request) {
     const token = this.authenticationService.extractTokenFromRequest(request);
     if (!token) throw new UserInputError('No access token provided');
     const payload = await this.jwtService
@@ -38,6 +31,12 @@ export class AccessTokenGuard implements CanActivate {
         throw new UserInputError('Invalid access token');
       });
     request[REQUEST_USER_KEY] = payload;
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const ctx = GqlExecutionContext.create(context);
+    const request = ctx.getContext().req as Request;
+    await this.SetUserInfoInRequest(request);
     return true;
   }
 }

@@ -27,4 +27,4 @@ dist-ssr
 *.env
 
 #Next
-.next
+*.next

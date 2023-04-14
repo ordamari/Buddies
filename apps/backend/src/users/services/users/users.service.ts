@@ -10,7 +10,7 @@ export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
 
-  create(createUserInput: CreateUserInput) {
+  create(createUserInput: CreateUserInput): Promise<User> {
     try {
       const user = this.userRepository.create({
         ...createUserInput,
@@ -22,7 +22,7 @@ export class UsersService {
     }
   }
 
-  createFromGoogle(email: string, googleId: string) {
+  createFromGoogle(email: string, googleId: string): Promise<User> {
     try {
       const user = this.userRepository.create({
         email,
@@ -34,31 +34,23 @@ export class UsersService {
     }
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User | null> {
     const user = await this.userRepository.findOneBy({
       email,
     });
-    if (!user) {
-      throw new UserInputError('This email is not registered');
-    }
+    if (!user) return null;
     return user;
   }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<User | null> {
     const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new UserInputError('This email is not registered');
-    }
+    if (!user) return null;
     return user;
   }
 
-  /**
-   * This method dont return error if user not found
-   * because it use to google authentication and if user not found
-   * it will create a new user
-   */
-  async findByGoogleId(googleId: string) {
+  async findByGoogleId(googleId: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ where: { googleId } });
+    if (!user) return null;
     return user;
   }
 }

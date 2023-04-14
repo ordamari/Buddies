@@ -43,13 +43,14 @@ export class AuthenticationService {
 
   async signIn(signInInput: SignInInput) {
     const user = await this.usersService.findByEmail(signInInput.email);
+    if (!user) {
+      throw new UserInputError('No user with such email');
+    }
     const isPasswordCorrect = await this.hashingService.compare(
       signInInput.password,
       user.password,
     );
-    if (!isPasswordCorrect) {
-      throw new UserInputError('Incorrect password');
-    }
+    if (!isPasswordCorrect) throw new UserInputError('Incorrect password');
     return await this.generateTokens(user);
   }
 
@@ -63,10 +64,10 @@ export class AuthenticationService {
       );
       if (isValidRefreshToken) {
         await this.refreshTokenIdsStorage.invalidate(userId);
-      } else {
-        throw new UserInputError('Invalid refresh token');
-      }
+      } else throw new UserInputError('Invalid refresh token');
+
       const user = await this.usersService.findById(userId);
+      if (!user) throw new UserInputError('No user with such id');
       return await this.generateTokens(user);
     } catch (e) {
       throw new UserInputError('Invalid refresh token');

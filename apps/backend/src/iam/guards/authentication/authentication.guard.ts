@@ -38,17 +38,16 @@ export class AuthenticationGuard implements CanActivate {
     ) ?? [AuthenticationGuard.defaultAuthTypes];
 
     const guards = authTypes.map((type) => this.authTypeGuardMap[type]).flat();
-    let error = new UserInputError('No authentication provided');
 
     for (const instance of guards) {
       const canActivate = await Promise.resolve(
         instance.canActivate(context),
       ).catch((e) => {
-        error = e;
+        throw new UserInputError(e.message);
       });
 
       if (canActivate) return true;
     }
-    throw error;
+    throw new UserInputError('Invalid access token');
   }
 }

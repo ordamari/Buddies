@@ -5,7 +5,7 @@ type PrivateProps = {
   googleClientId: string;
 };
 
-const GOOGLE_AUTHENTICATICATE = gql`
+const GOOGLE_AUTHENTICATE = gql`
   mutation GoogleAuthenticate($token: String!) {
     googleAuthenticate(googleTokenInput: { token: $token }) {
       refreshTokenExpires
@@ -15,9 +15,8 @@ const GOOGLE_AUTHENTICATICATE = gql`
 `;
 
 export default function Home({ googleClientId }: PrivateProps) {
-  const [googleAuthenticate, { data, loading, error }] = useMutation(
-    GOOGLE_AUTHENTICATICATE,
-  );
+  const [googleAuthenticate, { data, loading, error }] =
+    useMutation(GOOGLE_AUTHENTICATE);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

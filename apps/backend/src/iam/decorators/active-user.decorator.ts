@@ -7,10 +7,13 @@ import { ActiveUserData } from '../interfaces/active-user-data.interface';
  * Decorator for retrieving the active user from the request
  */
 export const ActiveUser = createParamDecorator(
-  (filed: keyof ActiveUserData | undefined, context: ExecutionContext) => {
+  (
+    specificField: keyof ActiveUserData | undefined,
+    context: ExecutionContext,
+  ) => {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req as Request;
     const user: ActiveUserData = request[REQUEST_USER_KEY];
-    return filed ? user[filed] : user;
+    return specificField ? user[specificField] : user;
   },
 );
