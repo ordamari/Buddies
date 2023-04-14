@@ -10,11 +10,6 @@ export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
 
-  /**
-   * Create a user
-   * @param createUserInput Email, and encrypted password of the user
-   * @returns The created user
-   */
   create(createUserInput: CreateUserInput) {
     try {
       const user = this.userRepository.create({
@@ -27,11 +22,18 @@ export class UsersService {
     }
   }
 
-  /**
-   * Get a user by email
-   * @param email Email of the user
-   * @returns The user with the given email
-   */
+  createFromGoogle(email: string, googleId: string) {
+    try {
+      const user = this.userRepository.create({
+        email,
+        googleId,
+      });
+      return this.userRepository.save(user);
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async findByEmail(email: string) {
     const user = await this.userRepository.findOneBy({
       email,
@@ -42,16 +44,21 @@ export class UsersService {
     return user;
   }
 
-  /**
-   * Get a user by Id
-   * @param id Id of the user
-   * @returns The user with the given id
-   */
   async findById(id: number) {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
       throw new UserInputError('This email is not registered');
     }
+    return user;
+  }
+
+  /**
+   * This method dont return error if user not found
+   * because it use to google authentication and if user not found
+   * it will create a new user
+   */
+  async findByGoogleId(googleId: string) {
+    const user = await this.userRepository.findOne({ where: { googleId } });
     return user;
   }
 }

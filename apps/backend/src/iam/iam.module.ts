@@ -14,7 +14,10 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
 import { AccessTokenGuard } from './guards/access-token/access-token.guard';
 import { RefreshTokenIdsStorage } from './storage/refresh-token-ids.storage/refresh-token-ids.storage';
 import { RedisService } from 'src/redis/services/redis/redis.service';
+import { GoogleAuthenticationService } from './services/google-authentication/google-authentication.service';
+import { GoogleAuthenticationResolver } from './resolvers/google-authentication/google-authentication.resolver';
 import redisConfig from 'src/redis/config/redis.config';
+import googleConfig from './config/google.config';
 
 @Module({
   imports: [
@@ -22,6 +25,7 @@ import redisConfig from 'src/redis/config/redis.config';
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(redisConfig),
+    ConfigModule.forFeature(googleConfig),
   ],
   providers: [
     {
@@ -38,6 +42,8 @@ import redisConfig from 'src/redis/config/redis.config';
     AuthenticationService,
     UsersService,
     RedisService,
+    GoogleAuthenticationService,
+    GoogleAuthenticationResolver,
   ],
 })
 export class IamModule {}

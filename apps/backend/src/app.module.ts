@@ -29,6 +29,8 @@ import * as Joi from '@hapi/joi';
         JWT_REFRESH_TOKEN_TTL: Joi.number().required(),
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
+        GOOGLE_CLIENT_ID: Joi.string().required(),
+        GOOGLE_CLIENT_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({

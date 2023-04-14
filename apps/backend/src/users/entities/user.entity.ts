@@ -7,19 +7,16 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 @ObjectType()
 export class User {
-  /**
-   * @description The ID of the user
-   */
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
 
-  /**
-   * @description The email of the user
-   */
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
+
+  @Column({ nullable: true })
+  googleId: string;
 }

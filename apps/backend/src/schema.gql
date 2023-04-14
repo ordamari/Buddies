@@ -18,6 +18,7 @@ type User {
   id: ID!
   email: String!
   password: String!
+  googleId: String!
 }
 
 type TokenExpiresData {
@@ -42,6 +43,7 @@ type Mutation {
   signIn(signInInput: SignInInput!): TokenExpiresData!
   signUp(signUpInput: SignUpInput!): User!
   refreshToken: TokenExpiresData!
+  googleAuthenticate(googleTokenInput: GoogleTokenInput!): TokenExpiresData!
 }
 
 input CreatePostInput {
@@ -60,4 +62,8 @@ input SignInInput {
 input SignUpInput {
   email: String!
   password: String!
+}
+
+input GoogleTokenInput {
+  token: String!
 }
