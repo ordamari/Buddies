@@ -1,0 +1,19 @@
+{
+  "black": "#111111",
+  "white": "#ffffff",
+  "near-white": "#f5f5f5",
+  "near-black": "#222222",
+  "teal-1": "#2f9fa6",
+  "teal-2": "#3fc1c9",
+  "teal-3": "#67ced4",
+  "small-gap": "0.25rem",
+  "medium-gap": "0.5rem",
+  "large-gap": "1rem",
+  "small-font-size": "0.75rem",
+  "medium-font-size": "1rem",
+  "large-font-size": "1.5rem",
+  "small-border-radius": "0.25rem",
+  "medium-border-radius": "0.5rem",
+  "large-border-radius": "1rem",
+  "bold": "600"
+}

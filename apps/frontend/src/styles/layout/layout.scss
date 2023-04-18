@@ -1,0 +1,71 @@
+.app {
+    height: 100%;
+    --primary-color: var(--teal-2);
+
+
+    &.light {
+        --background-color: var(--white);
+        --text-color: var(--black);
+        --near-background-color: var(--near-white);
+
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    &.dark {
+        --background-color: var(--black);
+        --text-color: var(--near-white);
+        --near-background-color: var(--near-black);
+
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    &.rtl {
+        direction: rtl;
+    }
+
+    &.ltr {
+        direction: ltr;
+    }
+
+
+
+    .main-container {
+        display: grid;
+        grid-template-columns: 20px 1fr 20px;
+
+        >* {
+            grid-column: 2;
+
+            &.full {
+                grid-column: 1 /-1;
+            }
+        }
+
+        $mobile-breakpoint: 460px;
+        $narrow-breakpoint: 720px;
+        $normal-breakpoint: 960px;
+
+        $mobile-breakpoint-without-lines: 420px;
+        $narrow-breakpoint-without-lines: 680px;
+        $normal-breakpoint-without-lines: 920px;
+
+
+
+        @media (min-width: $mobile-breakpoint) {
+            grid-template-columns:
+                minmax(20px, 1fr) minmax(auto, $mobile-breakpoint-without-lines) minmax(20px, 1fr);
+        }
+
+        @media (min-width:$narrow-breakpoint) {
+            grid-template-columns:
+                minmax(20px, 1fr) minmax(auto, $narrow-breakpoint-without-lines) minmax(20px, 1fr);
+        }
+
+        @media (min-width:$normal-breakpoint) {
+            grid-template-columns:
+                minmax(20px, 1fr) minmax(auto, $normal-breakpoint-without-lines) minmax(20px, 1fr);
+        }
+    }
+}

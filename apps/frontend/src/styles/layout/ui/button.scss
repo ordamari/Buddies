@@ -1,0 +1,28 @@
+a.button,
+button.button {
+    font-size: var(--large-font-size);
+    font-weight: var(--bold);
+    display: block;
+    padding-block: var(--small-font-size);
+    padding-inline: var(--medium-font-size);
+    border: none;
+    border-radius: var(--large-border-radius);
+
+    &.primary {
+        transition: all 0.3s ease;
+        background-color: var(--primary-color);
+        color: var(--background-color);
+
+        &:hover {
+            background-color: var(--teal-1);
+        }
+
+        &:disabled {
+            background-color: var(--teal-3);
+            opacity: .5;
+            pointer-events: none;
+        }
+
+
+    }
+}

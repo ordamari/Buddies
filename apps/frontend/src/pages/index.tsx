@@ -1,5 +1,6 @@
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { gql, useMutation } from '@apollo/client';
+import Link from 'next/link';
 
 type PrivateProps = {
   googleClientId: string;
@@ -21,25 +22,11 @@ export default function Home({ googleClientId }: PrivateProps) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log(data);
-
   return (
     <>
-      <GoogleOAuthProvider clientId={googleClientId}>
-        <GoogleLogin
-          onSuccess={(response) => {
-            googleAuthenticate({ variables: { token: response.credential } });
-          }}
-        />
-      </GoogleOAuthProvider>
+      <div className="home-page">
+        <Link href={'/authentication'}>authentication</Link>
+      </div>
     </>
   );
-}
-
-export async function getStaticProps() {
-  return {
-    props: {
-      googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-    } as PrivateProps,
-  };
 }
