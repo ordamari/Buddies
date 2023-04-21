@@ -41,7 +41,7 @@ function SignupForm({
         className="flex column gap-medium align-center justify-center"
         onSubmit={onsubmit}
       >
-        <div className="flex gap-medium">
+        <div className="flex gap-medium w100">
           <Input
             value={firstName}
             onChange={setFirstName}

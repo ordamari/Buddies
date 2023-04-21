@@ -11,31 +11,52 @@
         max-width: 100%;
         height: 700px;
 
+        @media (max-width: 1040px) {
+            margin-inline: 20px;
+            width: calc(100% - 40px);
+        }
+
         &.show-login {
-            .signup {
-                pointer-events: none;
+            @media screen and (min-width: 1041px) {
+                .signup {
+                    pointer-events: none;
 
-                form {
-                    transform: translateY(100%);
+                    form {
+                        transform: translateY(100%);
+                    }
+
+                    .other-option {
+                        transform: translateY(-100%);
+                    }
                 }
+            }
 
-                .other-option {
-                    transform: translateY(-100%);
+            @media screen and (max-width: 1040px) {
+                .signup {
+                    display: none;
                 }
             }
         }
 
         &.show-signup {
+            @media screen and (min-width: 1041px) {
 
-            .login {
-                pointer-events: none;
+                .login {
+                    pointer-events: none;
 
-                form {
-                    transform: translateY(100%);
+                    form {
+                        transform: translateY(100%);
+                    }
+
+                    .other-option {
+                        transform: translateY(-100%);
+                    }
                 }
+            }
 
-                .other-option {
-                    transform: translateY(-100%);
+            @media screen and (max-width: 1040px) {
+                .login {
+                    display: none;
                 }
             }
         }
@@ -54,6 +75,12 @@
             border-radius: var(--large-border-radius);
             overflow: hidden;
 
+            @media (max-width: 1040px) {
+                flex-direction: column;
+                height: max-content;
+                width: calc(100% - 40px);
+
+            }
 
             form {
                 width: 500px;
@@ -62,6 +89,11 @@
                 transform-origin: top;
                 background-color: var(--near-background-color);
                 transition: transform 0.3s ease;
+
+                @media (max-width: 1040px) {
+                    width: 100%;
+                    height: max-content;
+                }
 
                 span {
                     width: 100%;
@@ -82,6 +114,13 @@
                 transform-origin: bottom;
                 transition: transform 0.3s ease;
 
+                @media (max-width: 1040px) {
+                    width: 100%;
+                    height: max-content;
+                    background-color: var(--near-background-color);
+
+                }
+
 
 
                 button {
@@ -92,6 +131,11 @@
                     font-weight: var(--bold-font-weight);
                     cursor: pointer;
                     padding-inline-start: 10px;
+                    padding: var(--large-gap);
+
+                    @media (max-width: 1040px) {
+                        color: var(--primary-color);
+                    }
                 }
             }
         }
