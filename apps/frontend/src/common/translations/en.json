@@ -1,0 +1,13 @@
+{
+  "authentication": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "doNotHaveAccount": "Don't have an account?",
+    "signup": "Sign Up",
+    "or": "Or",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "alreadyHaveAccount": "Already have an account?"
+  }
+}
