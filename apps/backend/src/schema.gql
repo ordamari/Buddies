@@ -14,16 +14,12 @@ type Post {
   comments: [Comment!]!
 }
 
-type User {
-  id: ID!
-  email: String!
-  password: String!
-  googleId: String!
-}
-
-type TokenExpiresData {
+type LoggedInUserData {
   refreshTokenExpires: DateTime!
   accessTokenExpires: DateTime!
+  firstName: String!
+  lastName: String!
+  email: String!
 }
 
 """
@@ -40,10 +36,10 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  signIn(signInInput: SignInInput!): TokenExpiresData!
-  signUp(signUpInput: SignUpInput!): User!
-  refreshToken: TokenExpiresData!
-  googleAuthenticate(googleTokenInput: GoogleTokenInput!): TokenExpiresData!
+  signIn(signInInput: SignInInput!): LoggedInUserData!
+  signUp(signUpInput: SignUpInput!): LoggedInUserData!
+  refreshToken: LoggedInUserData!
+  googleAuthenticate(googleTokenInput: GoogleTokenInput!): LoggedInUserData!
 }
 
 input CreatePostInput {
@@ -61,6 +57,8 @@ input SignInInput {
 
 input SignUpInput {
   email: String!
+  firstName: String!
+  lastName: String!
   password: String!
 }
 

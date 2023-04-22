@@ -8,11 +8,18 @@ export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
 
-  create(email: string, encryptedPassword: string): Promise<User> {
+  create(
+    email: string,
+    encryptedPassword: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<User> {
     try {
       const user = this.userRepository.create({
         email,
         password: encryptedPassword,
+        firstName,
+        lastName,
       });
       return this.userRepository.save(user);
     } catch (err) {
@@ -20,11 +27,18 @@ export class UsersService {
     }
   }
 
-  createFromGoogle(email: string, googleId: string): Promise<User> {
+  createFromGoogle(
+    email: string,
+    googleId: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<User> {
     try {
       const user = this.userRepository.create({
         email,
         googleId,
+        firstName,
+        lastName,
       });
       return this.userRepository.save(user);
     } catch (err) {
