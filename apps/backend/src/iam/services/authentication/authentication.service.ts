@@ -1,7 +1,6 @@
 import { UserInputError } from '@nestjs/apollo';
-import { ExecutionContext, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { Context, GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
@@ -35,10 +34,7 @@ export class AuthenticationService {
     const encryptedPassword = await this.hashingService.hash(
       signUpInput.password,
     );
-    return this.usersService.create({
-      ...signUpInput,
-      encryptedPassword,
-    });
+    return this.usersService.create(signUpInput.email, encryptedPassword);
   }
 
   async signIn(signInInput: SignInInput) {

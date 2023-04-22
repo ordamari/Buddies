@@ -3,9 +3,6 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { REQUEST_USER_KEY } from '../iam.constants';
 import { ActiveUserData } from '../interfaces/active-user-data.interface';
 
-/**
- * Decorator for retrieving the active user from the request
- */
 export const ActiveUser = createParamDecorator(
   (
     specificField: keyof ActiveUserData | undefined,

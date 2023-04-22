@@ -1,7 +1,5 @@
-import { UserInputError } from '@nestjs/apollo';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -10,11 +8,11 @@ export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
 
-  create(createUserInput: CreateUserInput): Promise<User> {
+  create(email: string, encryptedPassword: string): Promise<User> {
     try {
       const user = this.userRepository.create({
-        ...createUserInput,
-        password: createUserInput.encryptedPassword,
+        email,
+        password: encryptedPassword,
       });
       return this.userRepository.save(user);
     } catch (err) {

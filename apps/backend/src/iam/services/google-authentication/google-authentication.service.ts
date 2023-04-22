@@ -35,14 +35,15 @@ export class GoogleAuthenticationService implements OnModuleInit {
       if (user) {
         return this.authService.generateTokens(user);
       } else {
-        const newUser = await this.usersService.createFromGoogle(
-          email,
-          googleId,
-        );
-        return this.authService.generateTokens(newUser);
+        return this._generateGoogleUser(email, googleId);
       }
     } catch (err) {
       throw new UserInputError("Can't authenticate with this google account");
     }
+  }
+
+  async _generateGoogleUser(email: string, googleId: string) {
+    const newUser = await this.usersService.createFromGoogle(email, googleId);
+    return this.authService.generateTokens(newUser);
   }
 }
