@@ -15,24 +15,35 @@ type Post {
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  email: String!
+  password: String!
+  googleId: String!
 }
+
+type TokenExpiresData {
+  refreshTokenExpires: DateTime!
+  accessTokenExpires: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Query {
   posts: [Post!]!
   post(id: ID!): Post!
-  users: [User!]!
-  user(id: Int!): User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
-  removeUser(id: ID!): User!
+  signIn(signInInput: SignInInput!): TokenExpiresData!
+  signUp(signUpInput: SignUpInput!): User!
+  refreshToken: TokenExpiresData!
+  googleAuthenticate(googleTokenInput: GoogleTokenInput!): TokenExpiresData!
 }
 
 input CreatePostInput {
@@ -43,13 +54,16 @@ input UpdatePostInput {
   text: String
 }
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input SignInInput {
+  email: String!
+  password: String!
 }
 
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input SignUpInput {
+  email: String!
+  password: String!
+}
+
+input GoogleTokenInput {
+  token: String!
 }
