@@ -8,10 +8,10 @@ export class LoggedInUserData {
   @Field()
   accessTokenExpires: Date;
 
-  @Field()
+  @Field({ nullable: true, defaultValue: '' })
   firstName: string;
 
-  @Field()
+  @Field({ nullable: true, defaultValue: '' })
   lastName: string;
 
   @Field()
