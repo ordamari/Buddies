@@ -1,6 +1,9 @@
+import { RootState } from '@/store/store';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export default function Home() {
+  const auth = useSelector((state: RootState) => state.auth);
   return (
     <>
       <div className="home-page page">

@@ -7,7 +7,6 @@ type PrivateProps = { children: React.ReactNode };
 
 function Layout({ children }: PrivateProps) {
   const globals = useSelector((state: RootState) => state.global);
-  useRefreshToken();
 
   return (
     <div

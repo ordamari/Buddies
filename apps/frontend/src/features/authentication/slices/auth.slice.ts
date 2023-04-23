@@ -26,8 +26,8 @@ export const authSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
-      state.refreshTokenExpires = action.payload.refreshTokenExpires;
-      state.accessTokenExpires = action.payload.accessTokenExpires;
+      state.refreshTokenExpires = new Date(action.payload.refreshTokenExpires);
+      state.accessTokenExpires = new Date(action.payload.accessTokenExpires);
     },
 
     clearLoggedInUserData: (state) => {
