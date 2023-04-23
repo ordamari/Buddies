@@ -1,7 +1,7 @@
+import useRefreshToken from '@/features/authentication/hooks/useRefreshToken';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { Language } from '../enums/language.enum';
-import { Theme } from '../enums/theme.enum';
 
 type PrivateProps = { children: React.ReactNode };
 

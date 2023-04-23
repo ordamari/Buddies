@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
-import { Request, Response } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 import jwtConfig from 'src/iam/config/jwt.config';
 import { SignInInput } from 'src/iam/dto/sign-in.input';
 import { SignUpInput } from 'src/iam/dto/sign-up.input';
@@ -30,6 +30,12 @@ export class AuthenticationService {
   private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
   @Inject(RefreshTokenIdsStorage)
   private readonly refreshTokenIdsStorage!: RefreshTokenIdsStorage;
+
+  private cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  } as CookieOptions;
 
   async signUp(signUpInput: SignUpInput) {
     const encryptedPassword = await this.hashingService.hash(
@@ -119,16 +125,12 @@ export class AuthenticationService {
 
   setTokensCookie(context: any, accessToken: string, refreshToken: string) {
     const response = context.res as Response;
-    response.cookie(COOKIES_ACCESS_TOKEN_KEY, accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-    });
-    response.cookie(COOKIES_REFRESH_TOKEN_KEY, refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-    });
+    response.cookie(COOKIES_ACCESS_TOKEN_KEY, accessToken, this.cookieOptions);
+    response.cookie(
+      COOKIES_REFRESH_TOKEN_KEY,
+      refreshToken,
+      this.cookieOptions,
+    );
   }
 
   private async signToken<T>(userId: number, expiresIn: number, payload?: T) {

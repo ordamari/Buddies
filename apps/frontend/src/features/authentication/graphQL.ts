@@ -5,6 +5,9 @@ export const GOOGLE_AUTHENTICATE = gql`
     googleAuthenticate(googleTokenInput: { token: $token }) {
       refreshTokenExpires
       accessTokenExpires
+      firstName
+      lastName
+      email
     }
   }
 `;
@@ -14,14 +17,44 @@ export const SIGN_IN = gql`
     signIn(signInInput: { password: $password, email: $email }) {
       refreshTokenExpires
       accessTokenExpires
+      firstName
+      lastName
+      email
     }
   }
 `;
 
 export const SIGN_UP = gql`
-  mutation SignUp($email: String!, $password: String!) {
-    signUp(signUpInput: { email: $email, password: $password }) {
-      id
+  mutation SignUp(
+    $email: String!
+    $password: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    signUp(
+      signUpInput: {
+        email: $email
+        password: $password
+        firstName: $firstName
+        lastName: $lastName
+      }
+    ) {
+      refreshTokenExpires
+      accessTokenExpires
+      firstName
+      lastName
+      email
+    }
+  }
+`;
+
+export const REFRESH_TOKENS = gql`
+  mutation RefreshToken {
+    refreshToken {
+      refreshTokenExpires
+      accessTokenExpires
+      firstName
+      lastName
       email
     }
   }

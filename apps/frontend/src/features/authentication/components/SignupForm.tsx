@@ -2,6 +2,7 @@ import useTranslation from '@/common/hooks/useTranslation';
 import { syncValidation } from '@/common/validations/syncValidation';
 import Button from '@/features/ui/Button';
 import Input from '@/features/ui/Input';
+import { ApolloError } from '@apollo/client';
 import { FormEvent, useState } from 'react';
 import GoogleAuthentication from './GoogleAuthentication';
 
@@ -9,12 +10,16 @@ type PrivateProps = {
   onGoogleAuthenticate: (value: any) => void;
   onSignup: (value: any) => void;
   toggleForm: (value: any) => void;
+  error: ApolloError | undefined;
+  googleError: ApolloError | undefined;
+  isLoading: boolean;
 };
 
 function SignupForm({
   onGoogleAuthenticate,
   onSignup,
   toggleForm,
+  isLoading,
 }: PrivateProps) {
   const t = useTranslation();
   const [firstName, setFirstName] = useState('');
@@ -27,13 +32,25 @@ function SignupForm({
   const firstNameValid = syncValidation.isNotEmpty(firstName);
   const lastNameValid = syncValidation.isNotEmpty(lastName);
   const isLoginValid =
-    emailValid && passwordValid && firstNameValid && lastNameValid;
+    emailValid &&
+    passwordValid &&
+    firstNameValid &&
+    lastNameValid &&
+    !isLoading;
 
   const onsubmit = (e: FormEvent<HTMLFormElement>) => {
     if (!isLoginValid) return;
     e.preventDefault();
-    onSignup({ variables: { email, password } });
+    onSignup({ variables: { email, password, firstName, lastName } });
+    clearForm();
   };
+
+  function clearForm() {
+    setEmail('');
+    setPassword('');
+    setFirstName('');
+    setLastName('');
+  }
 
   return (
     <div className="signup">

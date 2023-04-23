@@ -1,31 +1,14 @@
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { gql, useMutation } from '@apollo/client';
+import { RootState } from '@/store/store';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
-type PrivateProps = {
-  googleClientId: string;
-};
-
-const GOOGLE_AUTHENTICATE = gql`
-  mutation GoogleAuthenticate($token: String!) {
-    googleAuthenticate(googleTokenInput: { token: $token }) {
-      refreshTokenExpires
-      accessTokenExpires
-    }
-  }
-`;
-
-export default function Home({ googleClientId }: PrivateProps) {
-  const [googleAuthenticate, { data, loading, error }] =
-    useMutation(GOOGLE_AUTHENTICATE);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
+export default function Home() {
+  const auth = useSelector((state: RootState) => state.auth);
   return (
     <>
-      <div className="home-page">
+      <div className="home-page page">
         <Link href={'/authentication'}>authentication</Link>
+        <Link href={'/post'}>post</Link>
       </div>
     </>
   );
