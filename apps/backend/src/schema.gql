@@ -17,8 +17,8 @@ type Post {
 type LoggedInUserData {
   refreshTokenExpires: DateTime!
   accessTokenExpires: DateTime!
-  firstName: String
-  lastName: String
+  firstName: String!
+  lastName: String!
   email: String!
 }
 
