@@ -1,5 +1,12 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Post } from 'src/posts/entities/post.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 /**
  * @description The user entity class
@@ -25,4 +32,11 @@ export class User {
 
   @Column({ nullable: true })
   googleId: string;
+
+  @Column({ nullable: true })
+  profileImageUrl: string;
+
+  @JoinTable()
+  @OneToMany(() => Post, (post) => post.creator, { onDelete: 'CASCADE' })
+  posts: Post[];
 }

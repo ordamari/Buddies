@@ -11,8 +11,9 @@ import { UsersModule } from './users/users.module';
 import { IamModule } from './iam/iam.module';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { UserResolver } from './user/resolvers/user/user.resolver';
 import * as Joi from '@hapi/joi';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +32,9 @@ import * as Joi from '@hapi/joi';
         REDIS_PORT: Joi.number().required(),
         GOOGLE_CLIENT_ID: Joi.string().required(),
         GOOGLE_CLIENT_SECRET: Joi.string().required(),
+        CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+        CLOUDINARY_API_KEY: Joi.string().required(),
+        CLOUDINARY_API_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -53,8 +57,9 @@ import * as Joi from '@hapi/joi';
     UsersModule,
     IamModule,
     RedisModule,
+    CloudinaryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UserResolver],
 })
 export class AppModule {}

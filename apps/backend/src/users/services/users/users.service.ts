@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { UserInputError } from '@nestjs/apollo';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -7,6 +9,8 @@ import { Repository } from 'typeorm';
 export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
+  @Inject(CloudinaryService)
+  private readonly cloudinaryService!: CloudinaryService;
 
   create(
     email: string,
@@ -20,6 +24,7 @@ export class UsersService {
         password: encryptedPassword,
         firstName,
         lastName,
+        posts: [],
       });
       return this.userRepository.save(user);
     } catch (err) {
@@ -39,6 +44,7 @@ export class UsersService {
         googleId,
         firstName,
         lastName,
+        posts: [],
       });
       return this.userRepository.save(user);
     } catch (err) {
@@ -64,5 +70,16 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { googleId } });
     if (!user) return null;
     return user;
+  }
+
+  async updateProfileImageUrl(userId: number, file: Express.Multer.File) {
+    const res = await this.cloudinaryService.uploadImage(file);
+    if (res.error) throw new UserInputError(res.error.message);
+    const user = await this.userRepository.preload({
+      id: userId,
+      profileImageUrl: res.secure_url,
+    });
+    if (!user) throw new UserInputError('User not found');
+    return this.userRepository.save(user);
   }
 }

@@ -18,6 +18,8 @@ import { GoogleAuthenticationService } from './services/google-authentication/go
 import { GoogleAuthenticationResolver } from './resolvers/google-authentication/google-authentication.resolver';
 import redisConfig from 'src/redis/config/redis.config';
 import googleConfig from './config/google.config';
+import cloudinaryConfig from 'src/cloudinary/config/cloudinary.config';
+import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import googleConfig from './config/google.config';
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(redisConfig),
     ConfigModule.forFeature(googleConfig),
+    ConfigModule.forFeature(cloudinaryConfig),
   ],
   providers: [
     {
@@ -44,6 +47,7 @@ import googleConfig from './config/google.config';
     RedisService,
     GoogleAuthenticationService,
     GoogleAuthenticationResolver,
+    CloudinaryService,
   ],
 })
 export class IamModule {}

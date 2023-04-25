@@ -8,10 +8,22 @@ type Comment {
   post: Post!
 }
 
+type User {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  googleId: String!
+  profileImageUrl: String!
+  posts: [Post!]!
+}
+
 type Post {
   id: ID!
   text: String!
   comments: [Comment!]!
+  creator: User!
 }
 
 type LoggedInUserData {

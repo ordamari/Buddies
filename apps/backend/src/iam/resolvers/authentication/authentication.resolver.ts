@@ -46,8 +46,16 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => LoggedInUserData)
-  async signUp(@Args('signUpInput') signUpInput: SignUpInput) {
+  async signUp(
+    @Args('signUpInput') signUpInput: SignUpInput,
+    @Context() ctx: GqlExecutionContext,
+  ) {
     const { user, tokensData } = await this.authService.signUp(signUpInput);
+    this.authService.setTokensCookie(
+      ctx,
+      tokensData.accessToken,
+      tokensData.refreshToken,
+    );
     return {
       refreshTokenExpires: tokensData.refreshTokenExpires,
       accessTokenExpires: tokensData.accessTokenExpires,
