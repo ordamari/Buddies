@@ -3,8 +3,7 @@ import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/iam/interfaces/active-user-data.interface';
 import { User } from 'src/users/entities/user.entity';
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
-import { FileUpload } from 'graphql-upload/Upload.mjs';
-
+import type { FileUpload } from 'graphql-upload/processRequest.mjs';
 @Resolver()
 export class UsersResolver {
   @Mutation(() => User, { name: 'updateProfileImage' })
