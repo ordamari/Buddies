@@ -5,8 +5,13 @@
 
 // Layout
 @import "layout/layout.scss";
+@import "layout/navbar.scss";
 @import "layout/ui/input.scss";
 @import "layout/ui/button.scss";
+@import "layout/ui/file-input.scss";
 
 // Pages
 @import "pages/Authentication/authentication.page.scss";
+
+// Features 
+@import "features/users/user-profile.scss"

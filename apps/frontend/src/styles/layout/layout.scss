@@ -1,12 +1,13 @@
 .app {
     height: 100%;
     --primary-color: var(--teal-2);
+    --primary-color-opacity: var(--teal-2-opacity);
 
 
     &.light {
-        --background-color: var(--white);
+        --background-color: var(--near-white);
         --text-color: var(--black);
-        --near-background-color: var(--near-white);
+        --near-background-color: var(--white);
 
         background-color: var(--background-color);
         color: var(--text-color);
@@ -67,5 +68,9 @@
             grid-template-columns:
                 minmax(20px, 1fr) minmax(auto, $normal-breakpoint-without-lines) minmax(20px, 1fr);
         }
+    }
+
+    .page {
+        min-height: 100%;
     }
 }

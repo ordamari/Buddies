@@ -33,8 +33,13 @@ export class User {
   @Column({ nullable: true })
   googleId: string;
 
+  @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   profileImageUrl: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  coverImageUrl: string;
 
   @JoinTable()
   @OneToMany(() => Post, (post) => post.creator, { onDelete: 'CASCADE' })

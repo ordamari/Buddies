@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
+import { FileUpload } from 'graphql-upload';
 
 @Injectable()
 export class UsersService {
@@ -61,7 +62,10 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<User | null> {
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['posts'],
+    });
     if (!user) return null;
     return user;
   }
@@ -72,12 +76,23 @@ export class UsersService {
     return user;
   }
 
-  async updateProfileImageUrl(userId: number, file: Express.Multer.File) {
-    const res = await this.cloudinaryService.uploadImage(file);
+  async updateProfileImageUrl(userId: number, fileUpload: FileUpload) {
+    const res = await this.cloudinaryService.uploadImage(fileUpload);
     if (res.error) throw new UserInputError(res.error.message);
     const user = await this.userRepository.preload({
       id: userId,
       profileImageUrl: res.secure_url,
+    });
+    if (!user) throw new UserInputError('User not found');
+    return this.userRepository.save(user);
+  }
+
+  async updateCoverImageUrl(userId: number, fileUpload: FileUpload) {
+    const res = await this.cloudinaryService.uploadImage(fileUpload);
+    if (res.error) throw new UserInputError(res.error.message);
+    const user = await this.userRepository.preload({
+      id: userId,
+      coverImageUrl: res.secure_url,
     });
     if (!user) throw new UserInputError('User not found');
     return this.userRepository.save(user);

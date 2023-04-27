@@ -1,9 +1,9 @@
 import '@/styles/global.scss';
 import type { AppProps } from 'next/app';
 import { globalUtil } from '@/common/utils/global.util';
-import cssvariables from '@/common/jsons/cssvariables.json';
+import cssvariables from '@/common/assets/jsons/cssvariables.json';
 import { useEffect } from 'react';
-import Layout from '@/common/layout/Layout';
+import Layout from '@/layout/Layout';
 import Redux from '@/common/providers/Redux';
 import Apollo from '@/common/providers/Apollo';
 
@@ -17,12 +17,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Apollo>
-      <Redux>
+    <Redux>
+      <Apollo>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </Redux>
-    </Apollo>
+      </Apollo>
+    </Redux>
   );
 }

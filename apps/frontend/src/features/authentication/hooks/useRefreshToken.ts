@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { REFRESH_TOKENS } from '../graphQL';
-import { setLoggedInUserData } from '../slices/auth.slice';
+import { setAuthData } from '../slices/auth.slice';
 
 function useRefreshToken() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -24,7 +24,7 @@ function useRefreshToken() {
     }
     if (refreshTokenHandler.data) {
       const loggedInUser = refreshTokenHandler.data.refreshToken;
-      dispatch(setLoggedInUserData(loggedInUser));
+      dispatch(setAuthData(loggedInUser));
     }
   }, [refreshTokenHandler.data, refreshTokenHandler.error]);
 }

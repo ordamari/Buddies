@@ -12,7 +12,7 @@ import { IamModule } from './iam/iam.module';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { UserResolver } from './user/resolvers/user/user.resolver';
+import { FilesModule } from './files/files.module';
 import * as Joi from '@hapi/joi';
 @Module({
   imports: [
@@ -58,8 +58,9 @@ import * as Joi from '@hapi/joi';
     IamModule,
     RedisModule,
     CloudinaryModule,
+    FilesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserResolver],
+  providers: [AppService],
 })
 export class AppModule {}

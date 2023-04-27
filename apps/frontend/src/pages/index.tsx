@@ -6,9 +6,10 @@ export default function Home() {
   const auth = useSelector((state: RootState) => state.auth);
   return (
     <>
-      <div className="home-page page">
+      <div className="home-page">
         <Link href={'/authentication'}>authentication</Link>
         <Link href={'/post'}>post</Link>
+        <Link href={'/profile'}>profile</Link>
       </div>
     </>
   );

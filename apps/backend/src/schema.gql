@@ -10,12 +10,13 @@ type Comment {
 
 type User {
   id: ID!
+  profileImageUrl: String
+  coverImageUrl: String
   email: String!
   firstName: String!
   lastName: String!
   password: String!
   googleId: String!
-  profileImageUrl: String!
   posts: [Post!]!
 }
 
@@ -42,12 +43,15 @@ scalar DateTime
 type Query {
   posts: [Post!]!
   post(id: ID!): Post!
+  loggedInUser: User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
+  updateProfileImage(file: Upload!): User!
+  updateCoverImage(file: Upload!): User!
   signIn(signInInput: SignInInput!): LoggedInUserData!
   signUp(signUpInput: SignUpInput!): LoggedInUserData!
   refreshToken: LoggedInUserData!
@@ -61,6 +65,9 @@ input CreatePostInput {
 input UpdatePostInput {
   text: String
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input SignInInput {
   email: String!
