@@ -43,6 +43,7 @@ nav {
                     font-size: var(--small-font-size);
                     border-radius: 999px;
                     box-shadow: var(--box-shadow);
+                    z-index: 1;
                 }
 
                 &:not(.active):hover {

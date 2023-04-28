@@ -1,24 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../types/user.type';
-import { Post } from '@/features/post/types/post.type';
 
-export interface LoggedInUserState {
-  firstName: string;
-  lastName: string;
-  email: string;
-  profileImageUrl: string | null;
-  coverImageUrl: string | null;
-  posts: Post[];
-}
-
-const initialState: LoggedInUserState = {
+const initialState: User = {
   firstName: '',
   lastName: '',
   email: '',
-  profileImageUrl: null,
-  coverImageUrl: null,
+  profileImageUrl: '',
+  coverImageUrl: '',
   posts: [],
+  friends: [],
+  id: 0,
 };
 
 export const loggedInUserSlice = createSlice({
@@ -32,20 +24,20 @@ export const loggedInUserSlice = createSlice({
       state.profileImageUrl = action.payload.profileImageUrl;
       state.coverImageUrl = action.payload.coverImageUrl;
       state.posts = action.payload.posts;
+      state.friends = action.payload.friends;
     },
 
     clearLoggedInUser: (state) => {
       state.firstName = '';
       state.lastName = '';
       state.email = '';
-      state.profileImageUrl = null;
-      state.coverImageUrl = null;
+      state.profileImageUrl = '';
+      state.coverImageUrl = '';
       state.posts = [];
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setLoggedInUser, clearLoggedInUser } = loggedInUserSlice.actions;
 
 export default loggedInUserSlice.reducer;

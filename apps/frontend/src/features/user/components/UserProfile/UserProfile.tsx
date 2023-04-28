@@ -1,37 +1,34 @@
+import PostList from '@/features/post/components/PostList/PostList';
+import { Post } from '@/features/post/types/post.type';
+import { RootState } from '@/store/store';
+import { ApolloError } from '@apollo/client';
+import { useSelector } from 'react-redux';
 import { User } from '../../types/user.type';
-import CoverImage from './components/CoverImage/CoverImage';
-import FriendList from './components/Friends/components/FriendList/FriendList';
-import Friends from './components/Friends/Friends';
-import ProfileImage from './components/ProfileImage/ProfileImage';
+import UserProfileHeader from './components/UserProfileHeader/UserProfileHeader';
+import UserProfilePlaceholder from './components/UserProfilePlaceholder/UserProfilePlaceholder';
 
 type PrivateProps = {
   user: User;
-  isEditable: boolean;
+  error?: ApolloError | undefined;
+  isLoading?: boolean;
 };
 
-function UserProfile({ user, isEditable }: PrivateProps) {
-  const fullName = `${user.firstName} ${user.lastName}`;
+function UserProfile({ user, error, isLoading }: PrivateProps) {
+  if (isLoading || !user) return <UserProfilePlaceholder />;
+  if (error) return <div>Something went wrong</div>;
+  const loggedInUserId = useSelector(
+    (state: RootState) => state.loggedInUser.id,
+  );
   return (
-    <div className="user-profile">
+    <>
+      <UserProfileHeader user={user} isEditable={loggedInUserId === user.id} />
       <div className="main-container">
-        <CoverImage
-          coverImageUrl={user.coverImageUrl}
-          isEditable={isEditable}
+        <PostList
+          posts={user.posts.map((post) => ({ ...post, creator: user } as Post))}
         />
-        <div className="flex align-end image-and-info-wrapper">
-          <ProfileImage
-            profileImageUrl={user.profileImageUrl}
-            isEditable={isEditable}
-          />
-          <div className="info">
-            <div className="first-section">
-              <div className="full-name">{fullName}</div>
-              <Friends />
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+    </>
   );
 }
+
 export default UserProfile;

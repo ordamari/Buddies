@@ -1,9 +1,8 @@
 import FileInput from '@/layout/ui/FileInput';
-import { User } from '@/features/user/types/user.type';
 import { useMutation } from '@apollo/client';
 import Image from 'next/image';
-import { UPDATE_PROFILE_IMAGE } from '../../../../graphQL';
 import Icon from '@/common/components/Icon';
+import { UPDATE_PROFILE_IMAGE } from '@/features/user/graphQL';
 
 type PrivateProps = {
   profileImageUrl: string | null;

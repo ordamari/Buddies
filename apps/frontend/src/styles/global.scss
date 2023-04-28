@@ -14,4 +14,9 @@
 @import "pages/Authentication/authentication.page.scss";
 
 // Features 
-@import "features/users/user-profile.scss"
+@import "features/users/user-profile.scss";
+@import "features/users/user-list.scss";
+@import "features/users/user.scss";
+
+@import "features/post/post.scss";
+@import "features/post/post-list.scss";

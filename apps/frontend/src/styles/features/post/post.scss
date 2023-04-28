@@ -1,0 +1,33 @@
+.post {
+    background-color: var(--near-background-color);
+    border-radius: var(--large-border-radius);
+    padding: var(--large-gap);
+    box-shadow: var(--box-shadow);
+
+
+    .header {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--small-gap);
+        color: var(--text-color);
+        text-decoration: none;
+        padding-bottom: var(--large-gap);
+
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .info {
+            .name {
+                font-weight: var(--bold);
+                font-size: var(--medium-font-size);
+            }
+
+            .date {
+                font-size: var(--small-font-size);
+            }
+
+        }
+    }
+}

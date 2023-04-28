@@ -15,7 +15,7 @@ export function refreshToken() {
     variables: {},
   };
 
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}auth/refresh-token`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(graphqlQuery),

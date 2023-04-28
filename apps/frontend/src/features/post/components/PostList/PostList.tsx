@@ -15,7 +15,7 @@ function PostList({ posts, error, isLoading }: privateProps) {
   if (error) return <div className="error">{error.message}</div>;
   if (posts.length === 0) return <NoPosts />;
   return (
-    <ul>
+    <ul className="post-list">
       {posts.map((post) => {
         return <Post key={post.id} {...post} />;
       })}

@@ -3,6 +3,7 @@ import { Comment } from 'src/comments/entities/comment.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToOne,
@@ -16,6 +17,9 @@ export class Post {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Column()
   text: string;

@@ -3,6 +3,7 @@ import { UPDATE_COVER_IMAGE } from '@/features/user/graphQL';
 import Button from '@/layout/ui/Button';
 import FileInput from '@/layout/ui/FileInput';
 import { useMutation } from '@apollo/client';
+import Image from 'next/image';
 
 type PrivateProps = {
   coverImageUrl: string | null;
@@ -30,7 +31,7 @@ function CoverImage({ coverImageUrl, isEditable }: PrivateProps) {
 
   return (
     <div className="cover-photo-container">
-      <img src={getSrc()} alt="Cover photo" />
+      <Image src={getSrc()} alt="Cover photo" width={920} height={350} />
       {isEditable && (
         <FileInput onChange={handleFileChange} className="cover-photo-input">
           <Button asDiv={true} icon="edit" className="black-opacity small">

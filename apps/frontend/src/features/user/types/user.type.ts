@@ -8,4 +8,5 @@ export type User = {
   profileImageUrl: string;
   coverImageUrl: string;
   posts: Post[];
+  friends: User[];
 };

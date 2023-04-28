@@ -1,0 +1,28 @@
+.user {
+    display: flex;
+    gap: var(--large-gap);
+    background-color: var(--near-background-color);
+    padding: var(--large-gap);
+    border-radius: var(--large-border-radius);
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    text-decoration: none;
+    color: var(--text-color);
+
+
+    img {
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--small-gap);
+
+        .full-name {
+            font-size: var(--medium-font-size);
+            font-weight: var(--bold);
+        }
+    }
+}

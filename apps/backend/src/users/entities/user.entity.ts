@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -42,6 +43,16 @@ export class User {
   coverImageUrl: string;
 
   @JoinTable()
-  @OneToMany(() => Post, (post) => post.creator, { onDelete: 'CASCADE' })
+  @ManyToMany(() => User, (user) => user.friends, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  friends: User[];
+
+  @JoinTable()
+  @OneToMany(() => Post, (post) => post.creator, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   posts: Post[];
 }

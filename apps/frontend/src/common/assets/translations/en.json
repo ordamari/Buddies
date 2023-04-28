@@ -12,6 +12,7 @@
   },
   "user": {
     "changeCoverPhoto": "Change Cover Photo",
-    "noFriends": "No Friends"
+    "noFriends": "No Friends",
+    "friends": "Friends"
   }
 }

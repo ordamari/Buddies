@@ -5,6 +5,7 @@ import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { FileUpload } from 'graphql-upload';
+import { QueryAndFilterInput } from 'src/common/query-and-filter.input';
 
 @Injectable()
 export class UsersService {
@@ -26,6 +27,7 @@ export class UsersService {
         firstName,
         lastName,
         posts: [],
+        friends: [],
       });
       return this.userRepository.save(user);
     } catch (err) {
@@ -38,6 +40,7 @@ export class UsersService {
     googleId: string,
     firstName: string,
     lastName: string,
+    profileImageUrl: string,
   ): Promise<User> {
     try {
       const user = this.userRepository.create({
@@ -45,7 +48,9 @@ export class UsersService {
         googleId,
         firstName,
         lastName,
+        profileImageUrl,
         posts: [],
+        friends: [],
       });
       return this.userRepository.save(user);
     } catch (err) {
@@ -64,7 +69,7 @@ export class UsersService {
   async findById(id: number): Promise<User | null> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['posts'],
+      relations: ['posts', 'friends'],
     });
     if (!user) return null;
     return user;
@@ -96,5 +101,36 @@ export class UsersService {
     });
     if (!user) throw new UserInputError('User not found');
     return this.userRepository.save(user);
+  }
+
+  async addFriend(userId: number, friendId: number) {
+    const user = await this.findById(userId);
+    if (!user) throw new UserInputError('User not found');
+    const friend = await this.findById(friendId);
+    if (!friend) throw new UserInputError('Friend not found');
+    user.friends.push(friend);
+    friend.friends.push(user);
+    await this.userRepository.save(friend);
+    return this.userRepository.save(user);
+  }
+
+  async findByQuery(queryAndFilter: QueryAndFilterInput, userId: number) {
+    const { query, offset, limit } = queryAndFilter;
+    console.log({ userId });
+
+    const users = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.friends', 'friend')
+      .where(
+        '(LOWER(user.firstName) LIKE :searchString OR LOWER(user.lastName) LIKE :searchString)',
+        {
+          searchString: `%${query.toLowerCase()}%`,
+        },
+      )
+      .andWhere('user.id != :userId', { userId: userId.toString() })
+      .skip(offset)
+      .take(limit)
+      .getMany();
+    return users;
   }
 }

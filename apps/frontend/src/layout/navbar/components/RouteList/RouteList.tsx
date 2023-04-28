@@ -13,6 +13,7 @@ const routes: Route[] = [
   { path: '/', name: 'home', icon: 'home' },
   { path: '/post', name: 'edit', icon: 'edit' },
   { path: '/profile', name: 'profile', icon: 'user' },
+  { path: '/users', name: 'users', icon: 'user' },
 ];
 
 function RouteList() {

@@ -5,9 +5,16 @@ export const GET_POSTS = gql`
     posts {
       id
       text
+      createdAt
       comments {
         id
         text
+      }
+      creator {
+        id
+        profileImageUrl
+        firstName
+        lastName
       }
     }
   }
@@ -21,6 +28,12 @@ export const GET_POST = gql`
       comments {
         id
         text
+      }
+      creator {
+        id
+        profileImageUrl
+        firstName
+        lastName
       }
     }
   }

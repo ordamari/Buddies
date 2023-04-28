@@ -1,11 +1,12 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/iam/interfaces/active-user-data.interface';
 import { User } from 'src/users/entities/user.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { UsersService } from 'src/users/services/users/users.service';
-import { Inject } from '@nestjs/common';
+import { Inject, ParseIntPipe } from '@nestjs/common';
 import { UserInputError } from '@nestjs/apollo';
+import { QueryAndFilterInput } from 'src/common/query-and-filter.input';
 
 @Resolver()
 export class UsersResolver {
@@ -18,6 +19,18 @@ export class UsersResolver {
     return user;
   }
 
+  @Query(() => [User], { name: 'users' })
+  async findByQuery(
+    @ActiveUser() activeUser: ActiveUserData,
+    @Args('queryAndFilter') queryAndFilter: QueryAndFilterInput,
+  ) {
+    return this.usersService.findByQuery(queryAndFilter, activeUser.sub);
+  }
+
+  @Query(() => User, { name: 'user' })
+  async findById(@Args('id', { type: () => ID }, ParseIntPipe) id: number) {
+    return this.usersService.findById(id);
+  }
   @Mutation(() => User, { name: 'updateProfileImage' })
   async updateProfileImage(
     @ActiveUser() activeUser: ActiveUserData,
@@ -28,11 +41,20 @@ export class UsersResolver {
   }
 
   @Mutation(() => User, { name: 'updateCoverImage' })
-  async update(
+  async updateCoverImage(
     @ActiveUser() activeUser: ActiveUserData,
     @Args('file', { type: () => GraphQLUpload })
     fileUpload: FileUpload,
   ) {
     return this.usersService.updateCoverImageUrl(activeUser.sub, fileUpload);
+  }
+
+  // TODO: Change this to send friend request
+  @Mutation(() => User, { name: 'addFriend' })
+  async addFriend(
+    @ActiveUser() activeUser: ActiveUserData,
+    @Args('friendId', { type: () => ID }, ParseIntPipe) id: number,
+  ) {
+    return this.usersService.addFriend(activeUser.sub, id);
   }
 }
