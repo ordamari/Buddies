@@ -1,11 +1,14 @@
-.user-profile {
+.user-profile-header-placeholder,
+.user-profile-header {
 
     background-color: var(--near-background-color);
     background: linear-gradient(45deg, var(--near-background-color) 80%, var(--primary-color-opacity) 90%);
 
+    .cover-photo-container-placeholder,
     .cover-photo-container {
         position: relative;
 
+        .image-placeholder,
         img {
             width: 100%;
             height: 350px;
@@ -14,6 +17,7 @@
             border-bottom-right-radius: var(--large-border-radius);
         }
 
+        .button-placeholder,
         .cover-photo-input {
             position: absolute;
             bottom: var(--large-gap);
@@ -22,14 +26,19 @@
         }
     }
 
+    .image-and-info-wrapper-placeholder,
     .image-and-info-wrapper {
         position: relative;
         top: -50px;
 
+        .profile-image-container-placeholder,
         .profile-image-container {
             position: relative;
 
+            .image-placeholder,
             img {
+                width: 200px;
+                height: 200px;
                 border-radius: 50%;
                 object-fit: cover;
                 padding: var(--small-gap);
@@ -58,6 +67,7 @@
 
         }
 
+        .info-placeholder,
         .info {
             padding: var(--large-gap);
 
@@ -82,4 +92,41 @@
         right: unset !important;
         left: var(--large-gap) !important;
     }
+}
+
+.friends-placeholder,
+.full-name-placeholder,
+.inner-image-placeholder,
+.image-placeholder {
+    background-color: var(--background-color);
+}
+
+.button-placeholder {
+    height: var(--extra-large-font-size);
+    width: 150px;
+    background-color: var(--near-background-color);
+    border-radius: 999px;
+
+    &.second {
+        background-color: var(--background-color);
+        width: 100px;
+    }
+}
+
+.inner-image-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.full-name-placeholder {
+    width: 200px;
+    height: var(--extra-large-font-size);
+    border-radius: 999px;
+}
+
+.friends-placeholder {
+    width: 100px;
+    height: var(--medium-font-size);
+    border-radius: 999px;
 }

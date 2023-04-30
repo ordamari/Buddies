@@ -5,7 +5,7 @@ type PrivateProps = {
   children: React.ReactNode;
   className?: string;
   icon?: IconOptions;
-  onClick?: () => void | Promise<void>;
+  onClick?: (ev: any) => void | Promise<void>;
   href?: string;
   disabled?: boolean;
   asDiv?: boolean;

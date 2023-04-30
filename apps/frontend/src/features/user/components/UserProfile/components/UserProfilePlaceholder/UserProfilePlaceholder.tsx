@@ -1,4 +1,6 @@
+import UserProfileHeader from '../UserProfileHeader/UserProfileHeader';
+
 function UserProfilePlaceholder() {
-  return <div className="user-profile-placeholder"></div>;
+  return <UserProfileHeader user={null} isLoading={true} />;
 }
 export default UserProfilePlaceholder;

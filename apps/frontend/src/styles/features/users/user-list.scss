@@ -1,4 +1,5 @@
-.user-list {
+.user-list,
+.user-list-placeholder {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--medium-gap);

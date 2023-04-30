@@ -9,7 +9,11 @@ function UsersPage() {
   return (
     <AuthGuard>
       <div className="user-page">
-        <UserList users={usersHandler.data ? usersHandler.data.users : []} />
+        <UserList
+          isLoading={usersHandler.loading}
+          error={usersHandler.error}
+          users={usersHandler.data ? usersHandler.data.users : []}
+        />
       </div>
     </AuthGuard>
   );

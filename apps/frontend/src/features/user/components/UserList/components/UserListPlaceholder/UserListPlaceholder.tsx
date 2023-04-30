@@ -6,7 +6,7 @@ type PrivateProps = {
 
 function UserListPlaceholder({ length = 8 }: PrivateProps) {
   return (
-    <ul>
+    <ul className="user-list-placeholder">
       {Array.from({ length }, (_, i) => (
         <UserPlaceholder key={i} />
       ))}

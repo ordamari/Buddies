@@ -13,6 +13,13 @@
   "user": {
     "changeCoverPhoto": "Change Cover Photo",
     "noFriends": "No Friends",
-    "friends": "Friends"
+    "friends": "Friends",
+    "already-friend": "Already Friend",
+    "add-friend": "Add Friend",
+    "find-friends": "Find Friends"
+  },
+  "general": {
+    "and": "and",
+    "others": "others"
   }
 }

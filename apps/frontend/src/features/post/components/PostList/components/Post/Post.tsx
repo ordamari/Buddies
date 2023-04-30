@@ -11,10 +11,21 @@ function Post({ text, creator, createdAt }: privateProps) {
   const { firstName, lastName, profileImageUrl, id } = creator;
   const creatorName = `${firstName} ${lastName}`;
   const momentDate = moment(createdAt);
+
+  const getProfileImageSrc = () => {
+    if (profileImageUrl) return profileImageUrl;
+    return '/images/default-profile-image.jpg';
+  };
+
   return (
     <li className="post">
       <Link href={`/users/${id}`} className="header">
-        <Image width={40} height={40} src={profileImageUrl} alt={creatorName} />
+        <Image
+          width={40}
+          height={40}
+          src={getProfileImageSrc()}
+          alt={creatorName}
+        />
         <div className="info">
           <div className="name">{creatorName}</div>
           <div className="date">{momentDate.format(MOMENT_SHORT_FORMAT)}</div>

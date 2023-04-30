@@ -8,6 +8,7 @@ div.button {
     padding-inline: var(--medium-font-size);
     border: none;
     border-radius: var(--large-border-radius);
+    text-decoration: none;
 
     &.icon {
         display: flex;

@@ -1,14 +1,17 @@
+import useTranslation from '@/common/hooks/useTranslation';
 import { User } from '@/features/user/types/user.type';
-import FriendList from './components/FriendList/FriendList';
 import NoFriends from './components/NoFriends/NoFriends';
 
 type PrivateProps = {
   friends: User[];
 };
 function Friends({ friends }: PrivateProps) {
+  const t = useTranslation();
+  if (!friends) return <NoFriends />;
   return (
-    <div className="friends">
-      {friends.length === 0 ? <NoFriends /> : <FriendList friends={friends} />}
+    <div className="friends-number">
+      {' '}
+      {friends.length} {t('user.friends')}
     </div>
   );
 }

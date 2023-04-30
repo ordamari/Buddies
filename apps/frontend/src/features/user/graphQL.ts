@@ -51,6 +51,9 @@ export const GET_USERS = gql`
       profileImageUrl
       friends {
         id
+        firstName
+        lastName
+        profileImageUrl
       }
     }
   }
@@ -73,6 +76,20 @@ export const GET_USER = gql`
         id
         createdAt
         text
+      }
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation AddFriend($friendId: ID!) {
+    addFriend(friendId: $friendId) {
+      id
+      friends {
+        id
+        firstName
+        lastName
+        profileImageUrl
       }
     }
   }
