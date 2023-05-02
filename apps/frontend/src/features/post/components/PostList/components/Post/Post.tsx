@@ -1,37 +1,26 @@
-import { MOMENT_SHORT_FORMAT } from '@/features/post/constants';
-import moment from 'moment';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Post as TypePost } from '../../../../types/post.type';
+import PostActions from './components/PostActions/PostActions';
+import PostContent from './components/PostContent/PostContent';
+import PostHeader from './components/PostHeader/PostHeader';
+import PostStatistics from './components/PostStatistics/PostStatistics';
 
 type privateProps = {
   key: number;
 } & TypePost;
-function Post({ text, creator, createdAt }: privateProps) {
-  const { firstName, lastName, profileImageUrl, id } = creator;
-  const creatorName = `${firstName} ${lastName}`;
-  const momentDate = moment(createdAt);
-
-  const getProfileImageSrc = () => {
-    if (profileImageUrl) return profileImageUrl;
-    return '/images/default-profile-image.jpg';
-  };
-
+function Post({
+  text,
+  creator,
+  createdAt,
+  comments,
+  reactions,
+  id,
+}: privateProps) {
   return (
     <li className="post">
-      <Link href={`/users/${id}`} className="header">
-        <Image
-          width={40}
-          height={40}
-          src={getProfileImageSrc()}
-          alt={creatorName}
-        />
-        <div className="info">
-          <div className="name">{creatorName}</div>
-          <div className="date">{momentDate.format(MOMENT_SHORT_FORMAT)}</div>
-        </div>
-      </Link>
-      <h2 className="post-title">{text}</h2>
+      <PostHeader creator={creator} createdAt={createdAt} />
+      <PostContent text={text} />
+      <PostStatistics comments={comments} reactions={reactions} />
+      <PostActions postId={id} />
     </li>
   );
 }

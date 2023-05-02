@@ -7,21 +7,21 @@ import { Post } from 'src/posts/entities/post.entity';
 import { PostsService } from 'src/posts/services/posts/posts.service';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/services/users/users.service';
-import { Comment } from './entities/comment.entity';
-import { CommentsService } from './services/comments/comments.service';
-import { CommentsResolver } from './resolvers/comments/comments.resolver';
+import { Reaction } from './entities/reaction.entity';
+import { ReactionsResolver } from './resolvers/reactions/reactions.resolver';
+import { ReactionsService } from './services/reactions/reactions.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Comment, Post, User]),
+    TypeOrmModule.forFeature([Reaction, Post, User]),
     ConfigModule.forFeature(cloudinaryConfig),
   ],
   providers: [
-    CommentsService,
-    PostsService,
+    ReactionsResolver,
+    ReactionsService,
     UsersService,
+    PostsService,
     CloudinaryService,
-    CommentsResolver,
   ],
 })
-export class CommentsModule {}
+export class ReactionsModule {}

@@ -3,10 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 import { User } from './entities/user.entity';
 import { UsersService } from './services/users/users.service';
-import { UsersController } from './controllers/users/users.controller';
-import { ConfigModule } from '@nestjs/config';
 import cloudinaryConfig from 'src/cloudinary/config/cloudinary.config';
 import { UsersResolver } from './resolvers/users/users.resolver';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -14,6 +13,5 @@ import { UsersResolver } from './resolvers/users/users.resolver';
     ConfigModule.forFeature(cloudinaryConfig),
   ],
   providers: [UsersService, CloudinaryService, UsersResolver],
-  controllers: [UsersController],
 })
 export class UsersModule {}

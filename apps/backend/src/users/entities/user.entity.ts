@@ -1,5 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Comment } from 'src/comments/entities/comment.entity';
 import { Post } from 'src/posts/entities/post.entity';
+import { Reaction } from 'src/reactions/entities/reaction.entity';
 import {
   Column,
   Entity,
@@ -55,4 +57,16 @@ export class User {
     onUpdate: 'CASCADE',
   })
   posts: Post[];
+
+  @JoinTable()
+  @OneToMany(() => Comment, (comment) => comment.creator, {
+    onDelete: 'CASCADE',
+  })
+  comments: Comment[];
+
+  @JoinTable()
+  @OneToMany(() => Reaction, (reaction) => reaction.creator, {
+    onDelete: 'CASCADE',
+  })
+  reactions: Reaction[];
 }

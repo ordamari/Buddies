@@ -13,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { FilesModule } from './files/files.module';
+import { ReactionsModule } from './reactions/reactions.module';
 import * as Joi from '@hapi/joi';
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import * as Joi from '@hapi/joi';
     RedisModule,
     CloudinaryModule,
     FilesModule,
+    ReactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

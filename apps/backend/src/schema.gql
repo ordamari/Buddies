@@ -2,10 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Comment {
+type Reaction {
   id: ID!
-  text: String!
+  type: ReactionType!
   post: Post!
+  creator: User!
+}
+
+enum ReactionType {
+  LOVE
+  FUNNY
+  INTERESTING
+  SURPRISED
+  SAD
+  ANGRY
 }
 
 type User {
@@ -19,13 +29,15 @@ type User {
   googleId: String!
   friends: [User!]!
   posts: [Post!]!
+  comments: [Comment!]!
+  reactions: [Reaction!]!
 }
 
-type Post {
+type Comment {
   id: ID!
   createdAt: DateTime!
   text: String!
-  comments: [Comment!]!
+  post: Post!
   creator: User!
 }
 
@@ -33,6 +45,15 @@ type Post {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Post {
+  id: ID!
+  createdAt: DateTime!
+  text: String!
+  comments: [Comment!]!
+  reactions: [Reaction!]!
+  creator: User!
+}
 
 type LoggedInUserData {
   refreshTokenExpires: DateTime!
@@ -60,6 +81,7 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(id: ID!, updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
+  addCommentToPost(createCommentInput: CreateCommentInput!): Comment!
   updateProfileImage(file: Upload!): User!
   updateCoverImage(file: Upload!): User!
   addFriend(friendId: ID!): User!
@@ -67,6 +89,7 @@ type Mutation {
   signUp(signUpInput: SignUpInput!): LoggedInUserData!
   refreshToken: LoggedInUserData!
   googleAuthenticate(googleTokenInput: GoogleTokenInput!): LoggedInUserData!
+  addReactionToPost(createReactionInput: CreateReactionInput!): Reaction!
 }
 
 input CreatePostInput {
@@ -75,6 +98,11 @@ input CreatePostInput {
 
 input UpdatePostInput {
   text: String
+}
+
+input CreateCommentInput {
+  postId: ID!
+  text: String!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -94,4 +122,9 @@ input SignUpInput {
 
 input GoogleTokenInput {
   token: String!
+}
+
+input CreateReactionInput {
+  postId: ID!
+  type: ReactionType!
 }
