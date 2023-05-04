@@ -10,6 +10,7 @@ type Reaction {
 }
 
 enum ReactionType {
+  LIKE
   LOVE
   FUNNY
   INTERESTING

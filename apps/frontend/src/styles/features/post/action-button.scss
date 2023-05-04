@@ -1,0 +1,30 @@
+.post .actions {
+    display: flex;
+    border-top: 1px solid var(--light-color);
+    padding-block: var(--small-gap);
+    gap: var(--small-gap);
+
+    .action-button {
+        display: flex;
+        flex-grow: 1;
+        font-size: var(--medium-font-size);
+        align-items: center;
+        gap: var(--small-gap);
+        justify-content: center;
+        padding-block: var(--medium-gap);
+        background-color: transparent;
+        font-weight: var(--bold);
+        border-radius: var(--medium-border-radius);
+        border: none;
+        color: var(--light-color);
+        transition: all var(--transition);
+
+        &:hover {
+            background-color: var(--background-color);
+        }
+
+        svg {
+            width: var(--medium-font-size);
+        }
+    }
+}

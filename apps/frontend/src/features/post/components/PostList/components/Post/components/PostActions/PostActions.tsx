@@ -1,3 +1,5 @@
+import Icon from '@/common/components/Icon';
+import useTranslation from '@/common/hooks/useTranslation';
 import {
   ADD_COMMENT_TO_POST,
   ADD_REACTION_TO_POST,
@@ -9,6 +11,7 @@ type PrivateProps = {
 };
 
 function PostActions({ postId }: PrivateProps) {
+  const t = useTranslation();
   const [addComment, addCommentHandler] = useMutation(ADD_COMMENT_TO_POST);
   const [addReaction, addReactionHandler] = useMutation(ADD_REACTION_TO_POST);
 
@@ -25,7 +28,7 @@ function PostActions({ postId }: PrivateProps) {
     addReaction({
       variables: {
         postId,
-        type: 'LOVE',
+        type: 'SAD',
       },
     });
   }
@@ -37,16 +40,18 @@ function PostActions({ postId }: PrivateProps) {
       <button
         onClick={handleAddReaction}
         disabled={isAddReactionDisabled}
-        className="btn btn--primary"
+        className="action-button"
       >
-        Reaction
+        <Icon icon="like" />
+        {t('post.like')}
       </button>
       <button
         disabled={isAddCommentDisabled}
         onClick={handleAddComment}
-        className="btn btn--primary"
+        className="action-button"
       >
-        comment
+        <Icon icon="comment" />
+        {t('post.comment')}
       </button>
     </div>
   );

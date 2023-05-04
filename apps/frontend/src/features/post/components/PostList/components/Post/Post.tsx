@@ -19,7 +19,7 @@ function Post({
     <li className="post">
       <PostHeader creator={creator} createdAt={createdAt} />
       <PostContent text={text} />
-      <PostStatistics comments={comments} reactions={reactions} />
+      <PostStatistics postId={id} comments={comments} reactions={reactions} />
       <PostActions postId={id} />
     </li>
   );

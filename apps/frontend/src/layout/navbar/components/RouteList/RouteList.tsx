@@ -2,6 +2,7 @@ import { IconOptions } from '@/common/components/Icon';
 import useTranslation from '@/common/hooks/useTranslation';
 import { useRouter } from 'next/router';
 import NavItem from './components/NavItem/NavItem';
+import routes from '../../../../common/assets/jsons/routes.json';
 
 export type Route = {
   path: string;
@@ -9,20 +10,13 @@ export type Route = {
   icon: IconOptions;
 };
 
-const routes: Route[] = [
-  { path: '/', name: 'home', icon: 'home' },
-  { path: '/post', name: 'edit', icon: 'edit' },
-  { path: '/profile', name: 'profile', icon: 'user' },
-  { path: '/users', name: 'users', icon: 'user' },
-];
-
 function RouteList() {
   const router = useRouter();
   const t = useTranslation();
   return (
     <div className="main-container">
       <ul>
-        {routes.map((route) => {
+        {(routes as Route[]).map((route) => {
           return (
             <li key={route.path}>
               <NavItem

@@ -1,4 +1,10 @@
 {
+  "post": {
+    "like": "Like",
+    "comment": "Comment",
+    "comments": "Comments",
+    "noReactions": "No Reactions"
+  },
   "authentication": {
     "email": "Email",
     "password": "Password",

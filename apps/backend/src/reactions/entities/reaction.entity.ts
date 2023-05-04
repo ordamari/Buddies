@@ -4,12 +4,14 @@ import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
+  Index,
   JoinTable,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ReactionType } from '../enums/reaction-types.enum';
 
+@Index(['creator', 'post'], { unique: true })
 @ObjectType()
 @Entity()
 export class Reaction {

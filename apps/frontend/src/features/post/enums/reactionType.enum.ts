@@ -1,9 +1,9 @@
-export enum reactionType {
-  NONE,
-  LOVE,
-  FUNNY,
-  INTERESTING,
-  SURPRISED,
-  SAD,
-  ANGRY,
+export enum ReactionType {
+  LIKE = 'LIKE',
+  LOVE = 'LOVE',
+  FUNNY = 'FUNNY',
+  INTERESTING = 'INTERESTING',
+  SURPRISED = 'SURPRISED',
+  SAD = 'SAD',
+  ANGRY = 'ANGRY',
 }

@@ -1,0 +1,6 @@
+[
+  { "path": "/", "name": "home", "icon": "home" },
+  { "path": "/posts", "name": "posts", "icon": "edit" },
+  { "path": "/profile", "name": "profile", "icon": "user" },
+  { "path": "/users", "name": "users", "icon": "user" }
+]
