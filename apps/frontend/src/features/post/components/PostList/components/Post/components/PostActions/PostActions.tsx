@@ -1,58 +1,30 @@
-import Icon from '@/common/components/Icon';
-import useTranslation from '@/common/hooks/useTranslation';
-import {
-  ADD_COMMENT_TO_POST,
-  ADD_REACTION_TO_POST,
-} from '@/features/post/graphQL';
-import { useMutation } from '@apollo/client';
+import { ArrayActions } from '@/common/hooks/useArray';
+import { Comment } from '@/features/post/types/comment.type';
+import { Reaction } from '@/features/post/types/reaction.type';
+import CommentAction from './components/CommentAction/CommentAction';
+import LikeAction from './components/LikeAction/LikeAction';
 
 type PrivateProps = {
   postId: number;
+  loggedInUserReaction: Reaction | null;
+  commentsActions: ArrayActions<Comment>;
+  reactionsActions: ArrayActions<Reaction>;
 };
 
-function PostActions({ postId }: PrivateProps) {
-  const t = useTranslation();
-  const [addComment, addCommentHandler] = useMutation(ADD_COMMENT_TO_POST);
-  const [addReaction, addReactionHandler] = useMutation(ADD_REACTION_TO_POST);
-
-  function handleAddComment() {
-    addComment({
-      variables: {
-        postId,
-        text: 'This is a comment',
-      },
-    });
-  }
-
-  function handleAddReaction() {
-    addReaction({
-      variables: {
-        postId,
-        type: 'SAD',
-      },
-    });
-  }
-
-  const isAddCommentDisabled = addCommentHandler.loading;
-  const isAddReactionDisabled = addReactionHandler.loading;
+function PostActions({
+  postId,
+  loggedInUserReaction,
+  reactionsActions,
+  commentsActions,
+}: PrivateProps) {
   return (
-    <div className="actions">
-      <button
-        onClick={handleAddReaction}
-        disabled={isAddReactionDisabled}
-        className="action-button"
-      >
-        <Icon icon="like" />
-        {t('post.like')}
-      </button>
-      <button
-        disabled={isAddCommentDisabled}
-        onClick={handleAddComment}
-        className="action-button"
-      >
-        <Icon icon="comment" />
-        {t('post.comment')}
-      </button>
+    <div className="actions flex">
+      <LikeAction
+        reactionsActions={reactionsActions}
+        postId={postId}
+        loggedInUserReaction={loggedInUserReaction}
+      />
+      <CommentAction postId={postId} />
     </div>
   );
 }

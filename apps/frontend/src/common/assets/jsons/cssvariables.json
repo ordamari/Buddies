@@ -20,5 +20,11 @@
   "large-border-radius": "1rem",
   "bold": "600",
   "transition": "0.3s ease",
-  "box-shadow": "rgba(149, 157, 165, 1) 0px 8px 24px;"
+  "box-shadow": "rgba(149, 157, 165, 1) 0px 8px 24px",
+  "color-love": "#ff496c",
+  "color-funny": "#ffef00",
+  "color-interesting": "#3F704D",
+  "color-surprise": "#ffef00",
+  "color-sad": "#89827C",
+  "color-angry": "#A91834"
 }

@@ -31,6 +31,7 @@ export class UsersResolver {
   async findById(@Args('id', { type: () => ID }, ParseIntPipe) id: number) {
     return this.usersService.findById(id);
   }
+
   @Mutation(() => User, { name: 'updateProfileImage' })
   async updateProfileImage(
     @ActiveUser() activeUser: ActiveUserData,

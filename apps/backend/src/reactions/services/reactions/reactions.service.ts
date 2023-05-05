@@ -18,6 +18,28 @@ export class ReactionsService {
   @Inject(PostsService)
   private readonly postsService!: PostsService;
 
+  async findOne(id: number) {
+    return this.reactionRepository.findOne({
+      where: { id },
+      relations: ['creator'],
+    });
+  }
+
+  async remove(creatorId: number, id: number) {
+    const reaction = await this.findOne(id);
+    if (!reaction) throw new UserInputError('Reaction not found');
+    this.usersService.checkUser(reaction.creator, creatorId);
+    return this.reactionRepository.remove(reaction);
+  }
+
+  async editType(creatorId: number, id: number, type: ReactionType) {
+    const reaction = await this.findOne(id);
+    if (!reaction) throw new UserInputError('Reaction not found');
+    this.usersService.checkUser(reaction.creator, creatorId);
+    reaction.type = type;
+    return this.reactionRepository.save(reaction);
+  }
+
   async addReactionToPost(
     type: ReactionType,
     postId: number,

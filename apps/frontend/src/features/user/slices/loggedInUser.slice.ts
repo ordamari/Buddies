@@ -25,6 +25,7 @@ export const loggedInUserSlice = createSlice({
       state.coverImageUrl = action.payload.coverImageUrl;
       state.posts = action.payload.posts;
       state.friends = action.payload.friends;
+      state.id = action.payload.id;
     },
 
     clearLoggedInUser: (state) => {

@@ -133,4 +133,9 @@ export class UsersService {
       .getMany();
     return users;
   }
+
+  checkUser(user: User, userId: number) {
+    if (user.id !== userId)
+      throw new UserInputError('You are not the creator of this reaction');
+  }
 }

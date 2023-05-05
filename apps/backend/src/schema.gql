@@ -90,6 +90,8 @@ type Mutation {
   signUp(signUpInput: SignUpInput!): LoggedInUserData!
   refreshToken: LoggedInUserData!
   googleAuthenticate(googleTokenInput: GoogleTokenInput!): LoggedInUserData!
+  editReactionType(editReactionTypeInput: EditReactionTypeInput!): Reaction!
+  removeReaction(id: ID!): Reaction!
   addReactionToPost(createReactionInput: CreateReactionInput!): Reaction!
 }
 
@@ -123,6 +125,11 @@ input SignUpInput {
 
 input GoogleTokenInput {
   token: String!
+}
+
+input EditReactionTypeInput {
+  id: ID!
+  type: ReactionType!
 }
 
 input CreateReactionInput {

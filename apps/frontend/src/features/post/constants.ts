@@ -11,3 +11,13 @@ export const REACTION_TYPE_EMOJI = {
   [ReactionType.INTERESTING]: '🤨',
   [ReactionType.SURPRISED]: '😮',
 };
+
+export const REACTION_TYPE_EMOJI_ANIMATED = {
+  [ReactionType.LIKE]: '👍',
+  [ReactionType.LOVE]: '😍',
+  [ReactionType.FUNNY]: '😂',
+  [ReactionType.SAD]: '😢',
+  [ReactionType.ANGRY]: '😡',
+  [ReactionType.INTERESTING]: '🤔',
+  [ReactionType.SURPRISED]: '😮',
+};

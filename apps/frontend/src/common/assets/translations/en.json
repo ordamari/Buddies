@@ -3,7 +3,16 @@
     "like": "Like",
     "comment": "Comment",
     "comments": "Comments",
-    "noReactions": "No Reactions"
+    "noReactions": "No Reactions",
+    "reactionType": {
+      "LIKE": "Like",
+      "LOVE": "Love",
+      "FUNNY": "Funny",
+      "INTERESTING": "Interesting",
+      "SURPRISED": "Surprised",
+      "SAD": "Sad",
+      "ANGRY": "Angry"
+    }
   },
   "authentication": {
     "email": "Email",

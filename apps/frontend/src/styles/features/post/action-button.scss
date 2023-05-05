@@ -26,5 +26,76 @@
         svg {
             width: var(--medium-font-size);
         }
+
+        .reaction {
+
+            &.LIKE {
+                color: var(--primary-color);
+            }
+
+            &.LOVE {
+                color: var(--color-love);
+            }
+
+            &.FUNNY {
+                color: var(--color-funny);
+            }
+
+            &.INTERESTING {
+                color: var(--color-interesting);
+            }
+
+            &.FUNNY {
+                color: var(--color-funny);
+            }
+
+            &.SURPRISED {
+                color: var(--color-surprised);
+            }
+
+            &.SAD {
+                color: var(--color-sad);
+            }
+
+            &.ANGRY {
+                color: var(--color-angry);
+            }
+        }
     }
+
+    .action-button-container {
+        position: relative;
+        display: flex;
+
+        .reaction-options {
+            display: flex;
+            position: absolute;
+            top: 0;
+            transform: translateY(-100%);
+            gap: var(--small-gap);
+            background-color: var(--near-background-color);
+            box-shadow: var(--box-shadow);
+            padding: var(--small-gap) var(--medium-gap);
+            border-radius: 999px;
+            transition: all var(--transition);
+            transform-origin: left;
+
+            &.hide {
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-100%) scale(0);
+            }
+
+            .reaction-option {
+                width: calc(1.3 * var(--large-font-size));
+                height: calc(1.3 * var(--large-font-size));
+                background-color: transparent;
+                border: none;
+            }
+        }
+    }
+}
+
+.rtl.reaction-options {
+    transform-origin: right !important;
 }
