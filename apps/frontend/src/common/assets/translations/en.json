@@ -1,8 +1,8 @@
 {
-  "post": {
-    "like": "Like",
-    "comment": "Comment",
-    "comments": "Comments",
+  "comment": {
+    "writeComment": "Write a comment..."
+  },
+  "reaction": {
     "noReactions": "No Reactions",
     "reactionType": {
       "LIKE": "Like",
@@ -13,6 +13,11 @@
       "SAD": "Sad",
       "ANGRY": "Angry"
     }
+  },
+  "post": {
+    "like": "Like",
+    "comment": "Comment",
+    "comments": "Comments"
   },
   "authentication": {
     "email": "Email",

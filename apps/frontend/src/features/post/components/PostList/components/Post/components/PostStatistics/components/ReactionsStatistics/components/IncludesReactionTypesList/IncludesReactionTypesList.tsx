@@ -1,6 +1,6 @@
 import { globalUtil } from '@/common/utils/global.util';
-import { ReactionType } from '@/features/post/enums/reactionType.enum';
-import { Reaction } from '@/features/post/types/reaction.type';
+import { ReactionType } from '@/features/reaction/enums/reactionType.enum';
+import { Reaction } from '@/features/reaction/types/reaction.type';
 import IncludeReactionType from './components/IncludeReactionType/IncludeReactionType';
 
 type PrivateProps = {

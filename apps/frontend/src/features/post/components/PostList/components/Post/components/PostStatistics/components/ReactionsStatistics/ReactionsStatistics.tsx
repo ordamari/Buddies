@@ -1,4 +1,4 @@
-import { Reaction } from '@/features/post/types/reaction.type';
+import { Reaction } from '@/features/reaction/types/reaction.type';
 import IncludesReactionTypesList from './components/IncludesReactionTypesList/IncludesReactionTypesList';
 import NoReactions from './components/NoReactions/NoReactions';
 

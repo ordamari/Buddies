@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AddFriend from '../../../AddFriend/AddFriend';
 import MiniUserList from '../../../MiniUserList/MiniUserList';
+import ProfileImage from '../../../ProfileImage/ProfileImage';
 
 type privateProps = {
   key: number;
@@ -22,11 +23,6 @@ function User({
   const fullName = `${firstName} ${lastName}`;
   const t = useTranslation();
 
-  const getProfileImageSrc = () => {
-    if (profileImageUrl) return profileImageUrl;
-    return '/images/default-profile-image.jpg';
-  };
-
   const getCoverImageSrc = () => {
     if (coverImageUrl) return coverImageUrl;
     return '/images/default-cover-photo.jpg';
@@ -42,9 +38,9 @@ function User({
         height={132}
       />
       <div className="overlay" />
-      <Image
+      <ProfileImage
         className="profile-image"
-        src={getProfileImageSrc()}
+        src={profileImageUrl}
         alt={fullName}
         width={100}
         height={100}

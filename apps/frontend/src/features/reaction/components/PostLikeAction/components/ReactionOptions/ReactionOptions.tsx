@@ -1,7 +1,6 @@
 import Lotties from '@/common/components/Lotties';
 import useClickOutside from '@/common/hooks/useClickOutside';
-import { ReactionType } from '@/features/post/enums/reactionType.enum';
-import { getEmojiFromReactionType } from '@/features/post/utils';
+import { ReactionType } from '@/features/reaction/enums/reactionType.enum';
 import { useRef } from 'react';
 
 type PrivateProps = {

@@ -1,8 +1,11 @@
+import Condition from '@/common/components/Condition';
 import useArray from '@/common/hooks/useArray';
-import { Comment } from '@/features/post/types/comment.type';
-import { Reaction } from '@/features/post/types/reaction.type';
+import { useToggle } from '@/common/hooks/useToggle';
+import PostComments from '@/features/comment/components/PostComments/PostComments';
+import { Comment } from '@/features/comment/types/comment.type';
+import { Reaction } from '@/features/reaction/types/reaction.type';
 import { RootState } from '@/store/store';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Post as TypePost } from '../../../../types/post.type';
 import PostActions from './components/PostActions/PostActions';
@@ -23,6 +26,8 @@ function Post({
 }: privateProps) {
   const [comments, commentsActions] = useArray<Comment>();
   const [reactions, reactionsActions] = useArray<Reaction>();
+  const [isShowComments, toggleIsShowComments] = useToggle(false);
+  const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
   const loggedInUserId = useSelector(
     (state: RootState) => state.loggedInUser.id,
   );
@@ -35,6 +40,13 @@ function Post({
     if (loggedInUserReaction) return loggedInUserReaction;
     return null;
   };
+
+  function handleShowComments() {
+    toggleIsShowComments(true);
+    setTimeout(() => {
+      if (commentTextareaRef.current) commentTextareaRef.current.focus();
+    }, 0);
+  }
 
   useEffect(() => {
     commentsActions.set(propsComments);
@@ -54,7 +66,16 @@ function Post({
         postId={id}
         commentsActions={commentsActions}
         reactionsActions={reactionsActions}
+        showComments={handleShowComments}
       />
+      <Condition condition={isShowComments}>
+        <PostComments
+          commentTextareaRef={commentTextareaRef}
+          comments={comments}
+          postId={id}
+          commentsActions={commentsActions}
+        />
+      </Condition>
     </li>
   );
 }

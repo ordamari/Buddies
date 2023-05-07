@@ -1,5 +1,5 @@
-import { Comment } from '@/features/post/types/comment.type';
-import { Reaction } from '@/features/post/types/reaction.type';
+import { Comment } from '@/features/comment/types/comment.type';
+import { Reaction } from '@/features/reaction/types/reaction.type';
 import CommentsStatistics from './components/CommentsStatistics/CommentsStatistics';
 import ReactionsStatistics from './components/ReactionsStatistics/ReactionsStatistics';
 

@@ -1,7 +1,7 @@
-import { MOMENT_SHORT_FORMAT } from '@/features/post/constants';
+import { MOMENT_SHORT_FORMAT } from '@/common/constants';
+import ProfileImage from '@/features/user/components/ProfileImage/ProfileImage';
 import { User } from '@/features/user/types/user.type';
 import moment from 'moment';
-import Image from 'next/image';
 import Link from 'next/link';
 
 type PrivateProps = {
@@ -14,17 +14,12 @@ function PostHeader({ creator, createdAt }: PrivateProps) {
   const creatorName = `${firstName} ${lastName}`;
   const momentDate = moment(createdAt);
 
-  const getProfileImageSrc = () => {
-    if (profileImageUrl) return profileImageUrl;
-    return '/images/default-profile-image.jpg';
-  };
-
   return (
     <Link href={`/users/${id}`} className="header">
-      <Image
+      <ProfileImage
         width={40}
         height={40}
-        src={getProfileImageSrc()}
+        src={profileImageUrl}
         alt={creatorName}
       />
       <div className="info">

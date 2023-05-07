@@ -1,6 +1,5 @@
-import { REACTION_TYPE_EMOJI } from '@/features/post/constants';
-import { ReactionType } from '@/features/post/enums/reactionType.enum';
-import { getEmojiFromReactionType } from '@/features/post/utils';
+import { ReactionType } from '@/features/reaction/enums/reactionType.enum';
+import { getEmojiFromReactionType } from '@/features/reaction/utils';
 import { User } from '@/features/user/types/user.type';
 
 type privateProps = {

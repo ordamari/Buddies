@@ -3,20 +3,20 @@ import Icon from '@/common/components/Icon';
 import useLongHover from '@/common/hooks/useLongHover';
 import { useToggle } from '@/common/hooks/useToggle';
 import useTranslation from '@/common/hooks/useTranslation';
-import { ReactionType } from '@/features/post/enums/reactionType.enum';
+import { ReactionType } from '@/features/reaction/enums/reactionType.enum';
 import {
   ADD_REACTION_TO_POST,
   EDIT_REACTION_TYPE,
   REMOVE_REACTION,
-} from '@/features/post/graphQL';
-import { getEmojiFromReactionType } from '@/features/post/utils';
-import { Reaction } from '@/features/post/types/reaction.type';
+} from '../../graphQL';
 import { useMutation } from '@apollo/client';
 import { useRef } from 'react';
 import ReactionOptions from './components/ReactionOptions/ReactionOptions';
 import { ArrayActions } from '@/common/hooks/useArray';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
+import { Reaction } from '../../types/reaction.type';
+import { getEmojiFromReactionType } from '../../utils';
 
 type PrivateProps = {
   postId: number;
@@ -24,7 +24,7 @@ type PrivateProps = {
   reactionsActions: ArrayActions<Reaction>;
 };
 
-function LikeAction({
+function PostLikeAction({
   postId,
   loggedInUserReaction,
   reactionsActions,
@@ -124,7 +124,7 @@ function LikeAction({
                       {getEmojiFromReactionType(loggedInUserReaction.type)}
                     </span>
                     <span className={`reaction ${loggedInUserReaction.type}`}>
-                      {t(`post.reactionType.${loggedInUserReaction.type}`)}
+                      {t(`reaction.reactionType.${loggedInUserReaction.type}`)}
                     </span>
                   </>
                 }
@@ -140,4 +140,4 @@ function LikeAction({
   );
 }
 
-export default LikeAction;
+export default PostLikeAction;

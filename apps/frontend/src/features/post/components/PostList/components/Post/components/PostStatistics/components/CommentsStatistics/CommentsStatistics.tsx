@@ -1,5 +1,5 @@
 import useTranslation from '@/common/hooks/useTranslation';
-import { Comment } from '@/features/post/types/comment.type';
+import { Comment } from '@/features/comment/types/comment.type';
 import Link from 'next/link';
 
 type PrivateProps = {
