@@ -12,6 +12,28 @@
         border-radius: var(--medium-border-radius);
         display: flex;
         flex-direction: column;
+    }
 
+    .comment-header {
+        display: flex;
+        gap: var(--large-gap);
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--medium-gap);
+
+        .name {
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-color);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .time-ago {
+            font-size: var(--small-font-size);
+            color: var(--light-color);
+        }
     }
 }

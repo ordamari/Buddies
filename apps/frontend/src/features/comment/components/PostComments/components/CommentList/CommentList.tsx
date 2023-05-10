@@ -4,6 +4,7 @@ import Comment from './components/Comment/Comment';
 type PrivateProps = {
   comments: CommentType[];
 };
+
 function CommentList({ comments }: PrivateProps) {
   return (
     <ul className="comment-list">

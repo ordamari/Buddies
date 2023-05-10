@@ -31,6 +31,27 @@ export const GET_LOGGED_IN_USER = gql`
         id
         text
         createdAt
+        comments {
+          id
+          text
+          createdAt
+          creator {
+            id
+            profileImageUrl
+            firstName
+            lastName
+          }
+        }
+        reactions {
+          id
+          type
+          creator {
+            id
+            profileImageUrl
+            firstName
+            lastName
+          }
+        }
       }
       friends {
         id
@@ -76,6 +97,27 @@ export const GET_USER = gql`
         id
         createdAt
         text
+        comments {
+          id
+          text
+          createdAt
+          creator {
+            id
+            profileImageUrl
+            firstName
+            lastName
+          }
+        }
+        reactions {
+          id
+          type
+          creator {
+            id
+            profileImageUrl
+            firstName
+            lastName
+          }
+        }
       }
     }
   }

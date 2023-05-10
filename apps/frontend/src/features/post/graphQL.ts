@@ -65,3 +65,13 @@ export const GET_POST = gql`
     }
   }
 `;
+
+export const CREATE_POST = gql`
+  mutation CreatePost($text: String!) {
+    createPost(createPostInput: { text: $text }) {
+      id
+      text
+      createdAt
+    }
+  }
+`;

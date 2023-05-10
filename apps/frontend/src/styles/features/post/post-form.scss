@@ -1,0 +1,21 @@
+.post-form {
+    background-color: var(--near-background-color);
+    border-radius: var(--medium-border-radius);
+    padding: var(--large-gap);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--large-gap);
+
+    img {
+        border-radius: 50%;
+    }
+
+    form {
+        width: 100%;
+
+        textarea {
+            min-height: 5em;
+        }
+    }
+}

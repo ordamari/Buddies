@@ -14,21 +14,19 @@ function RouteList() {
   const router = useRouter();
   const t = useTranslation();
   return (
-    <div className="main-container">
-      <ul>
-        {(routes as Route[]).map((route) => {
-          return (
-            <li key={route.path}>
-              <NavItem
-                {...route}
-                name={t(route.name)}
-                isActive={router.pathname === route.path}
-              />
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <ul>
+      {(routes as Route[]).map((route) => {
+        return (
+          <li key={route.path}>
+            <NavItem
+              {...route}
+              name={t(route.name)}
+              isActive={router.pathname === route.path}
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 export default RouteList;

@@ -1,3 +1,6 @@
 .post-comments {
     padding-bottom: var(--large-gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--large-gap);
 }

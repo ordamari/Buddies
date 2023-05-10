@@ -9,6 +9,7 @@ export type ArrayActions<T extends Item> = {
   getById: (id: number | string) => T | undefined;
   replaceById: (id: number | string, newItem: T) => void;
   updateById: (id: number | string, props: Partial<T>) => void;
+  getSortedByDates: (dateKey: keyof T, isFromNewToOld?: boolean) => T[];
 };
 
 function useArray<T extends Item>(initialArray: T[] = []) {
@@ -39,6 +40,24 @@ function useArray<T extends Item>(initialArray: T[] = []) {
     );
   };
 
+  const getSortedByDates = (dateKey: keyof T, isFromNewToOld = false) => {
+    return [...array].sort((a, b) => {
+      if (a[dateKey] instanceof Date && b[dateKey] instanceof Date) {
+        return (
+          (isFromNewToOld ? 1 : -1) *
+            (b[dateKey] as unknown as Date).getTime() -
+          (a[dateKey] as unknown as Date).getTime()
+        );
+      } else {
+        return (
+          (isFromNewToOld ? 1 : -1) *
+            new Date(b[dateKey] as unknown as string).getTime() -
+          new Date(a[dateKey] as unknown as string).getTime()
+        );
+      }
+    });
+  };
+
   return [
     array,
     {
@@ -49,6 +68,7 @@ function useArray<T extends Item>(initialArray: T[] = []) {
       getById,
       replaceById,
       updateById,
+      getSortedByDates,
     } as const,
   ] as [T[], ArrayActions<T>];
 }

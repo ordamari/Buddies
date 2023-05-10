@@ -17,7 +17,8 @@
   "post": {
     "like": "Like",
     "comment": "Comment",
-    "comments": "Comments"
+    "comments": "Comments",
+    "postForm": "What's on your mind?"
   },
   "authentication": {
     "email": "Email",

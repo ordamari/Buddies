@@ -10,11 +10,14 @@ type PrivateProps = {
   commentsActions: ArrayActions<Comment>;
 };
 function PostComments({
-  comments,
   commentTextareaRef,
   commentsActions,
   postId,
 }: PrivateProps) {
+  const sortedCommentsByDates = commentsActions.getSortedByDates(
+    'createdAt',
+    false,
+  );
   return (
     <div className="post-comments">
       <CommentTextarea
@@ -22,7 +25,7 @@ function PostComments({
         postId={postId}
         textareaRef={commentTextareaRef}
       />
-      <CommentList comments={comments} />
+      <CommentList comments={sortedCommentsByDates} />
     </div>
   );
 }

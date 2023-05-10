@@ -69,7 +69,14 @@ export class UsersService {
   async findById(id: number): Promise<User | null> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['posts', 'friends'],
+      relations: [
+        'posts',
+        'posts.comments',
+        'posts.comments.creator',
+        'posts.reactions',
+        'posts.reactions.creator',
+        'friends',
+      ],
     });
     if (!user) return null;
     return user;
