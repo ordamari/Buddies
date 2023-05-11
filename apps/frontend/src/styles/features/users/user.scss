@@ -1,0 +1,106 @@
+.user,
+.user-placeholder {
+    display: flex;
+    gap: var(--large-gap);
+    background-color: var(--near-background-color);
+    padding: var(--large-gap);
+    border-radius: var(--large-border-radius);
+    box-shadow: var(--box-shadow);
+    text-decoration: none;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+
+    .cover-image {
+        width: calc(100% + var(--large-gap));
+        height: calc(100% + var(--large-gap));
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0.3;
+    }
+
+    .overlay {
+        width: calc(100% + var(--large-gap));
+        height: 100%;
+        // height: calc(100% + var(--large-gap));
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background: linear-gradient(to top, var(--near-background-color), transparent);
+    }
+
+    .profile-image,
+    .profile-image-placeholder {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        position: relative;
+        z-index: 1;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--small-gap);
+        position: relative;
+        z-index: 1;
+        width: 100%;
+
+        .full-name {
+            font-size: var(--medium-font-size);
+            font-weight: var(--bold);
+            color: var(--text-color);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .other-friends {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+
+    }
+}
+
+.user-placeholder {
+
+    .button-placeholder,
+    .other-friends-placeholder,
+    .full-name-placeholder,
+    .profile-image-placeholder {
+        background-color: var(--background-color);
+        border-radius: 999px;
+    }
+
+    .mini-user-list-placeholder .profile-image-placeholder {
+        width: 30px;
+        height: 30px;
+
+    }
+
+    .full-name-placeholder {
+        width: 150px;
+        height: var(--medium-font-size)
+    }
+
+    .other-friends-placeholder {
+        width: 50px;
+        height: var(--small-font-size)
+    }
+
+    .button-placeholder {
+        width: 100px;
+        height: 30px;
+    }
+}

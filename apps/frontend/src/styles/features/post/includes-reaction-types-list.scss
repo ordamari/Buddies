@@ -1,0 +1,16 @@
+.includes-reaction-types-list {
+    display: flex;
+    align-items: center;
+
+    .reaction-type {
+        background-color: var(--near-background-color);
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        padding: 1px;
+        cursor: pointer;
+
+        &:not(:first-child) {
+            margin-left: calc(-1 * var(--small-gap));
+        }
+    }
+}

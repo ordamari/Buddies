@@ -35,6 +35,7 @@ export class GoogleAuthenticationService implements OnModuleInit {
         sub: googleId,
         given_name,
         family_name,
+        picture,
       } = loginTicket.getPayload();
 
       const user = await this.usersService.findByGoogleId(googleId);
@@ -50,6 +51,7 @@ export class GoogleAuthenticationService implements OnModuleInit {
           googleId,
           given_name,
           family_name,
+          picture,
         );
       }
     } catch (err) {
@@ -62,12 +64,14 @@ export class GoogleAuthenticationService implements OnModuleInit {
     googleId: string,
     firstName: string,
     lastName: string,
+    profileImageUrl: string,
   ) {
     const newUser = await this.usersService.createFromGoogle(
       email,
       googleId,
       firstName,
       lastName,
+      profileImageUrl,
     );
     const tokensData = await this.authService.generateTokens(newUser);
     return {

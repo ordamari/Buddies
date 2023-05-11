@@ -4,14 +4,14 @@ import {
   SIGN_IN,
   SIGN_UP,
 } from '@/features/authentication/graphQL';
-import SignupForm from '@/features/authentication/components/SignupForm';
-import LoginForm from '@/features/authentication/components/LoginForm';
+import SignupForm from '@/features/authentication/components/SignupForm/SignupForm';
+import LoginForm from '@/features/authentication/components/LoginForm/LoginForm';
 import { useToggle } from '@/common/hooks/useToggle';
 import { useEffect } from 'react';
-import { LoggedInUserData } from '../../features/authentication/types/logged-in-user-data.type';
+import { AuthData } from '../../features/authentication/types/auth.type';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { setLoggedInUserData } from '@/features/authentication/slices/auth.slice';
+import { setAuthData } from '@/features/authentication/slices/auth.slice';
 
 export default function authentication() {
   const [googleAuthenticate, googleAuthenticateHandler] =
@@ -23,14 +23,14 @@ export default function authentication() {
   const router = useRouter();
 
   useEffect(() => {
-    let loggedInUser: LoggedInUserData | null = null;
+    let loggedInUser: AuthData | null = null;
     if (loginHandler.data) loggedInUser = loginHandler.data.signIn;
     if (signupHandler.data) loggedInUser = signupHandler.data.signUp;
     if (googleAuthenticateHandler.data) {
       loggedInUser = googleAuthenticateHandler.data.googleAuthenticate;
     }
     if (loggedInUser) {
-      dispatch(setLoggedInUserData(loggedInUser));
+      dispatch(setAuthData(loggedInUser));
       router.push('/');
     }
   }, [loginHandler.data, signupHandler.data, googleAuthenticateHandler.data]);

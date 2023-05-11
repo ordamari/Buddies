@@ -1,0 +1,98 @@
+nav {
+    background-color: var(--near-background-color);
+    padding: var(--small-gap);
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        gap: var(--large-gap);
+
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                border-radius: 50%;
+            }
+        }
+    }
+
+    ul {
+        display: flex;
+        width: 100%;
+
+        li {
+            flex: 1;
+
+            .nav-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                transition: all var(--transition);
+
+                a {
+                    padding: var(--small-gap);
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--text-color);
+                    height: 100%;
+                    transition: all var(--transition);
+
+                }
+
+                svg {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .name {
+                    pointer-events: none;
+                    position: absolute;
+                    bottom: 0;
+                    opacity: 0;
+                    transition: all var(--transition);
+                    background-color: var(--near-background-color);
+                    padding: var(--small-gap) var(--large-gap);
+                    font-size: var(--small-font-size);
+                    border-radius: 999px;
+                    box-shadow: var(--box-shadow);
+                    z-index: 1;
+                }
+
+                &:not(.active):hover {
+                    a {
+                        background-color: var(--background-color);
+                        border-radius: var(--medium-border-radius);
+                    }
+
+                    .name {
+                        opacity: 1;
+                        transform: translateY(calc(100% + var(--medium-gap)));
+                    }
+
+
+                }
+
+                &.active {
+                    a {
+                        color: var(--primary-color);
+                    }
+
+                    border-bottom: 3px solid var(--primary-color);
+
+
+                }
+            }
+
+
+        }
+
+
+
+
+    }
+}

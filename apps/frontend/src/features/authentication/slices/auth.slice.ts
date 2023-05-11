@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { LoggedInUserData } from '../types/logged-in-user-data.type';
+import { AuthData } from '../types/auth.type';
 
 export interface AuthState {
   firstName: string;
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setLoggedInUserData: (state, action: PayloadAction<LoggedInUserData>) => {
+    setAuthData: (state, action: PayloadAction<AuthData>) => {
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
@@ -30,7 +30,7 @@ export const authSlice = createSlice({
       state.accessTokenExpires = new Date(action.payload.accessTokenExpires);
     },
 
-    clearLoggedInUserData: (state) => {
+    clearAuthData: (state) => {
       state.firstName = '';
       state.lastName = '';
       state.email = '';
@@ -41,6 +41,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoggedInUserData, clearLoggedInUserData } = authSlice.actions;
+export const { setAuthData, clearAuthData } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -5,8 +5,31 @@
 
 // Layout
 @import "layout/layout.scss";
+@import "layout/navbar.scss";
 @import "layout/ui/input.scss";
 @import "layout/ui/button.scss";
+@import "layout/ui/file-input.scss";
+@import "layout/ui/textarea";
 
 // Pages
 @import "pages/Authentication/authentication.page.scss";
+
+// Features 
+@import "features/users/user-profile-header.scss";
+@import "features/users/user-list.scss";
+@import "features/users/user.scss";
+@import "features/users/add-friend.scss";
+@import "features/users/mini-user-list.scss";
+
+@import "features/post/post-list.scss";
+@import "features/post/post.scss";
+@import "features/post/post-header.scss";
+@import "features/post/action-button.scss";
+@import "features/post/post-statistics.scss";
+@import "features/post/includes-reaction-types-list.scss";
+@import "features/post/post-form.scss";
+
+@import "features/comment/comment-textarea.scss";
+@import "features/comment/post-comments.scss";
+@import "features/comment/comment-list.scss";
+@import "features/comment/comment.scss";

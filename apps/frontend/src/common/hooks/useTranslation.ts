@@ -1,7 +1,7 @@
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { Language } from '../enums/language.enum';
-import { translations } from '../translations';
+import { translations } from '../assets/translations';
 
 function useTranslation() {
   const language = useSelector((state: RootState) => state.global.language);

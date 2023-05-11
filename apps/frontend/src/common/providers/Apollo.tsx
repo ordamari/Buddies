@@ -1,30 +1,42 @@
-import { LoggedInUserData } from '@/features/authentication/types/logged-in-user-data.type';
+import { AuthData } from '@/features/authentication/types/auth.type';
 import { store } from '@/store/store';
 import {
   ApolloProvider,
   ApolloClient,
   InMemoryCache,
-  HttpLink,
   ApolloLink,
-  concat,
   from,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { refreshToken } from './helpers/refreshToken';
+import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from '@apollo/client/link/context';
 
 type PrivateProps = {
   children: React.ReactNode;
 };
 
-const httpLink = new HttpLink({
+const httpLink = createUploadLink({
   uri: process.env.NEXT_PUBLIC_API_URL,
   credentials: 'include',
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      'Apollo-Require-Preflight': 'true',
+    },
+  };
 });
 
 const logoutLink = onError(({ networkError }) => {
   if (networkError?.message === 'invalid token') {
     store.dispatch({
-      type: 'auth/clearLoggedInUserData',
+      type: 'auth/clearAuthData',
+    });
+    store.dispatch({
+      type: 'auth/clearLoggedInUser',
     });
   }
 });
@@ -37,16 +49,17 @@ const refreshTokenMiddleware = new ApolloLink((operation, forward) => {
   ) {
     refreshToken().then((res) => {
       res.json().then((res) => {
-        const loggedInUserData: LoggedInUserData | undefined =
-          res?.data?.refreshToken;
+        const loggedInUserData: AuthData | undefined = res?.data?.refreshToken;
         if (loggedInUserData) {
-          console.log(loggedInUserData);
-
           store.dispatch({
-            type: 'auth/setLoggedInUserData',
+            type: 'auth/setAuthData',
             payload: {
               ...loggedInUserData,
             },
+          });
+        } else {
+          store.dispatch({
+            type: 'auth/clearAuthData',
           });
         }
       });
@@ -57,8 +70,9 @@ const refreshTokenMiddleware = new ApolloLink((operation, forward) => {
 });
 
 const client = new ApolloClient({
-  link: from([refreshTokenMiddleware, logoutLink, httpLink]),
+  link: from([authLink, logoutLink, refreshTokenMiddleware, httpLink]),
   cache: new InMemoryCache(),
+  connectToDevTools: true,
 });
 
 function Apollo({ children }: PrivateProps) {
