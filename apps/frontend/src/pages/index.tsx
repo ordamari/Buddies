@@ -1,45 +1,34 @@
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { gql, useMutation } from '@apollo/client';
+import useArray from '@/common/hooks/useArray';
+import AuthGuard from '@/features/authentication/guards/auth.guard';
+import PostForm from '@/features/post/components/PostForm/PostForm';
+import PostList from '@/features/post/components/PostList/PostList';
+import { GET_POSTS } from '@/features/post/graphQL';
+import { Post } from '@/features/post/types/post.type';
+import { useQuery } from '@apollo/client';
+import { useEffect } from 'react';
 
-type PrivateProps = {
-  googleClientId: string;
-};
-
-const GOOGLE_AUTHENTICATE = gql`
-  mutation GoogleAuthenticate($token: String!) {
-    googleAuthenticate(googleTokenInput: { token: $token }) {
-      refreshTokenExpires
-      accessTokenExpires
+function FeedPage() {
+  const postsHandler = useQuery(GET_POSTS);
+  const [posts, postsActions] = useArray<Post>();
+  useEffect(() => {
+    if (postsHandler.data) {
+      postsActions.set(postsHandler.data.posts);
     }
-  }
-`;
+  }, [postsHandler.data]);
 
-export default function Home({ googleClientId }: PrivateProps) {
-  const [googleAuthenticate, { data, loading, error }] =
-    useMutation(GOOGLE_AUTHENTICATE);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  console.log(data);
-
+  const sortedPostsByDates = postsActions.getSortedByDates('createdAt', true);
   return (
-    <>
-      <GoogleOAuthProvider clientId={googleClientId}>
-        <GoogleLogin
-          onSuccess={(response) => {
-            googleAuthenticate({ variables: { token: response.credential } });
-          }}
+    <AuthGuard>
+      <div className="post-page">
+        <PostForm afterSubmit={postsActions.add} />
+        <PostList
+          error={postsHandler.error}
+          isLoading={postsHandler.loading}
+          posts={sortedPostsByDates}
         />
-      </GoogleOAuthProvider>
-    </>
+      </div>
+    </AuthGuard>
   );
 }
 
-export async function getStaticProps() {
-  return {
-    props: {
-      googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-    } as PrivateProps,
-  };
-}
+export default FeedPage;

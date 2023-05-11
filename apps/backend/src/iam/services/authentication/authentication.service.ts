@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
-import { Request, Response } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 import jwtConfig from 'src/iam/config/jwt.config';
 import { SignInInput } from 'src/iam/dto/sign-in.input';
 import { SignUpInput } from 'src/iam/dto/sign-up.input';
@@ -12,6 +12,7 @@ import {
   COOKIES_REFRESH_TOKEN_KEY,
 } from 'src/iam/iam.constants';
 import { ActiveUserData } from 'src/iam/interfaces/active-user-data.interface';
+import { TokensData } from 'src/iam/interfaces/tokens-data.interface';
 import { RefreshTokenIdsStorage } from 'src/iam/storage/refresh-token-ids.storage/refresh-token-ids.storage';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -30,11 +31,26 @@ export class AuthenticationService {
   @Inject(RefreshTokenIdsStorage)
   private readonly refreshTokenIdsStorage!: RefreshTokenIdsStorage;
 
-  async signUp(signUpInput: SignUpInput): Promise<User> {
+  private cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  } as CookieOptions;
+
+  async signUp(signUpInput: SignUpInput) {
     const encryptedPassword = await this.hashingService.hash(
       signUpInput.password,
     );
-    return this.usersService.create(signUpInput.email, encryptedPassword);
+    const user = await this.usersService.create(
+      signUpInput.email,
+      encryptedPassword,
+      signUpInput.firstName,
+      signUpInput.lastName,
+    );
+
+    const tokensData = await this.generateTokens(user);
+
+    return { user, tokensData };
   }
 
   async signIn(signInInput: SignInInput) {
@@ -47,7 +63,8 @@ export class AuthenticationService {
       user.password,
     );
     if (!isPasswordCorrect) throw new UserInputError('Incorrect password');
-    return await this.generateTokens(user);
+    const tokensData = await this.generateTokens(user);
+    return { tokensData, user };
   }
 
   async refreshTokens(refreshToken: string) {
@@ -64,7 +81,8 @@ export class AuthenticationService {
 
       const user = await this.usersService.findById(userId);
       if (!user) throw new UserInputError('No user with such id');
-      return await this.generateTokens(user);
+      const tokensData = await this.generateTokens(user);
+      return { tokensData, user };
     } catch (e) {
       throw new UserInputError('Invalid refresh token');
     }
@@ -82,7 +100,11 @@ export class AuthenticationService {
       this.signToken<Partial<ActiveUserData>>(
         user.id,
         this.jwtConfiguration.accessTokenTtl,
-        { email: user.email },
+        {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        },
       ),
       this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl, {
         refreshTokenId,
@@ -98,21 +120,17 @@ export class AuthenticationService {
       refreshTokenExpires: new Date(
         Date.now() + this.jwtConfiguration.refreshTokenTtl * 1000,
       ),
-    };
+    } as TokensData;
   }
 
   setTokensCookie(context: any, accessToken: string, refreshToken: string) {
     const response = context.res as Response;
-    response.cookie(COOKIES_ACCESS_TOKEN_KEY, accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-    });
-    response.cookie(COOKIES_REFRESH_TOKEN_KEY, refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-    });
+    response.cookie(COOKIES_ACCESS_TOKEN_KEY, accessToken, this.cookieOptions);
+    response.cookie(
+      COOKIES_REFRESH_TOKEN_KEY,
+      refreshToken,
+      this.cookieOptions,
+    );
   }
 
   private async signToken<T>(userId: number, expiresIn: number, payload?: T) {

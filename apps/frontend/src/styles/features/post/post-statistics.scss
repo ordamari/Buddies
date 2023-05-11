@@ -1,0 +1,29 @@
+.post-statistics {
+    padding-block: var(--small-gap);
+
+    .comments-statistics {
+        color: var(--light-color);
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .reactions-statistics {
+        display: flex;
+        align-items: center;
+        gap: var(--small-gap);
+
+        .amount {
+            color: var(--light-color);
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -14,9 +14,8 @@ import { SignInInput } from 'src/iam/dto/sign-in.input';
 import { SignUpInput } from 'src/iam/dto/sign-up.input';
 import { AuthType } from 'src/iam/enums/auth-type.enum';
 import { COOKIES_REFRESH_TOKEN_KEY } from 'src/iam/iam.constants';
-import { TokenExpiresData } from 'src/iam/dto/token-expires-data.output';
+import { LoggedInUserData } from 'src/iam/dto/logged-in-user-data.output';
 import { AuthenticationService } from 'src/iam/services/authentication/authentication.service';
-import { User } from 'src/users/entities/user.entity';
 @Auth(AuthType.None)
 @Resolver()
 export class AuthenticationResolver {
@@ -25,47 +24,70 @@ export class AuthenticationResolver {
   @Inject(jwtConfig.KEY)
   private readonly jwtConfiguration!: ConfigType<typeof jwtConfig>;
 
-  @Mutation(() => TokenExpiresData)
+  @Mutation(() => LoggedInUserData)
   async signIn(
     @Args('signInInput') signInInput: SignInInput,
     @Context() ctx: GqlExecutionContext,
   ) {
-    const {
-      accessToken,
-      refreshToken,
-      refreshTokenExpires,
-      accessTokenExpires,
-    } = await this.authService.signIn(signInInput);
-    this.authService.setTokensCookie(ctx, accessToken, refreshToken);
+    const { tokensData, user } = await this.authService.signIn(signInInput);
+    this.authService.setTokensCookie(
+      ctx,
+      tokensData.accessToken,
+      tokensData.refreshToken,
+    );
+
     return {
-      refreshTokenExpires,
-      accessTokenExpires,
-    };
+      refreshTokenExpires: tokensData.refreshTokenExpires,
+      accessTokenExpires: tokensData.accessTokenExpires,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    } as LoggedInUserData;
   }
 
-  @Mutation(() => User)
-  async signUp(@Args('signUpInput') signUpInput: SignUpInput) {
-    return this.authService.signUp(signUpInput);
+  @Mutation(() => LoggedInUserData)
+  async signUp(
+    @Args('signUpInput') signUpInput: SignUpInput,
+    @Context() ctx: GqlExecutionContext,
+  ) {
+    const { user, tokensData } = await this.authService.signUp(signUpInput);
+    this.authService.setTokensCookie(
+      ctx,
+      tokensData.accessToken,
+      tokensData.refreshToken,
+    );
+    return {
+      refreshTokenExpires: tokensData.refreshTokenExpires,
+      accessTokenExpires: tokensData.accessTokenExpires,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    } as LoggedInUserData;
   }
 
-  @Mutation(() => TokenExpiresData)
+  @Mutation(() => LoggedInUserData)
   async refreshToken(@Context() context: any) {
     const request = context.req as Request;
     const oldRefreshToken = this.authService.extractTokenFromRequest(
       request,
       COOKIES_REFRESH_TOKEN_KEY,
     );
-    const {
-      accessToken,
-      refreshToken,
-      refreshTokenExpires,
-      accessTokenExpires,
-    } = await this.authService.refreshTokens(oldRefreshToken);
+    const { tokensData, user } = await this.authService.refreshTokens(
+      oldRefreshToken,
+    );
 
-    this.authService.setTokensCookie(context, accessToken, refreshToken);
+    this.authService.setTokensCookie(
+      context,
+      tokensData.accessToken,
+      tokensData.refreshToken,
+    );
+
     return {
-      refreshTokenExpires,
-      accessTokenExpires,
-    };
+      refreshTokenExpires: tokensData.refreshTokenExpires,
+      accessTokenExpires: tokensData.accessTokenExpires,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    } as LoggedInUserData;
   }
 }

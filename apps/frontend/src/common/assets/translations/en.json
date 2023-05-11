@@ -1,0 +1,46 @@
+{
+  "comment": {
+    "writeComment": "Write a comment..."
+  },
+  "reaction": {
+    "noReactions": "No Reactions",
+    "reactionType": {
+      "LIKE": "Like",
+      "LOVE": "Love",
+      "FUNNY": "Funny",
+      "INTERESTING": "Interesting",
+      "SURPRISED": "Surprised",
+      "SAD": "Sad",
+      "ANGRY": "Angry"
+    }
+  },
+  "post": {
+    "like": "Like",
+    "comment": "Comment",
+    "comments": "Comments",
+    "postForm": "What's on your mind?"
+  },
+  "authentication": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "doNotHaveAccount": "Don't have an account?",
+    "signup": "Sign Up",
+    "or": "Or",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "user": {
+    "changeCoverPhoto": "Change Cover Photo",
+    "noFriends": "No Friends",
+    "friends": "Friends",
+    "already-friend": "Already Friend",
+    "add-friend": "Add Friend",
+    "find-friends": "Find Friends"
+  },
+  "general": {
+    "and": "and",
+    "others": "others"
+  }
+}

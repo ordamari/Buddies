@@ -30,20 +30,53 @@ export class GoogleAuthenticationService implements OnModuleInit {
       const loginTicket = await this.oauthClient.verifyIdToken({
         idToken: token,
       });
-      const { email, sub: googleId } = loginTicket.getPayload();
+      const {
+        email,
+        sub: googleId,
+        given_name,
+        family_name,
+        picture,
+      } = loginTicket.getPayload();
+
       const user = await this.usersService.findByGoogleId(googleId);
       if (user) {
-        return this.authService.generateTokens(user);
+        const tokensData = await this.authService.generateTokens(user);
+        return {
+          tokensData,
+          user,
+        };
       } else {
-        return this._generateGoogleUser(email, googleId);
+        return this.generateGoogleUser(
+          email,
+          googleId,
+          given_name,
+          family_name,
+          picture,
+        );
       }
     } catch (err) {
       throw new UserInputError("Can't authenticate with this google account");
     }
   }
 
-  async _generateGoogleUser(email: string, googleId: string) {
-    const newUser = await this.usersService.createFromGoogle(email, googleId);
-    return this.authService.generateTokens(newUser);
+  private async generateGoogleUser(
+    email: string,
+    googleId: string,
+    firstName: string,
+    lastName: string,
+    profileImageUrl: string,
+  ) {
+    const newUser = await this.usersService.createFromGoogle(
+      email,
+      googleId,
+      firstName,
+      lastName,
+      profileImageUrl,
+    );
+    const tokensData = await this.authService.generateTokens(newUser);
+    return {
+      tokensData,
+      user: newUser,
+    };
   }
 }
