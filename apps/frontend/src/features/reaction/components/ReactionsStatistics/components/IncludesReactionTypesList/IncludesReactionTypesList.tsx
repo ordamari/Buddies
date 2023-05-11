@@ -15,10 +15,16 @@ function IncludesReactionTypesList({ reactions }: PrivateProps) {
   return (
     <ul className="includes-reaction-types-list">
       {includesReactionsTypes.map((type) => {
-        const users = reactions
+        const reactedThisReactionUsers = reactions
           .filter((reactions) => reactions.type === type)
           .map((reaction) => reaction.creator);
-        return <IncludeReactionType key={type} type={type} users={users} />;
+        return (
+          <IncludeReactionType
+            key={type}
+            type={type}
+            users={reactedThisReactionUsers}
+          />
+        );
       })}
     </ul>
   );

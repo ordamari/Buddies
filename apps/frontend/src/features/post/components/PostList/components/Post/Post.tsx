@@ -60,7 +60,12 @@ function Post({
     <li className="post">
       <PostHeader creator={creator} createdAt={createdAt} />
       <PostContent text={text} />
-      <PostStatistics postId={id} comments={comments} reactions={reactions} />
+      <PostStatistics
+        handleShowComments={handleShowComments}
+        postId={id}
+        comments={comments}
+        reactions={reactions}
+      />
       <PostActions
         loggedInUserReaction={getLoggedInUserReaction()}
         postId={id}

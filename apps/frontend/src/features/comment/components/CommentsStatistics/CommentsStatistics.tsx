@@ -1,19 +1,25 @@
 import useTranslation from '@/common/hooks/useTranslation';
 import { Comment } from '@/features/comment/types/comment.type';
-import Link from 'next/link';
 
 type PrivateProps = {
   comments: Comment[];
-  postId: number;
+  onClick?: () => void;
 };
-function CommentsStatistics({ comments, postId }: PrivateProps) {
+function CommentsStatistics({ comments, onClick }: PrivateProps) {
   const t = useTranslation();
 
   const length = comments.length;
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <Link href={`posts/${postId}`} className="comments-statistics">
+    <div onClick={handleClick} className="comments-statistics">
       {length} {t(`post.${length === 1 ? 'comment' : 'comments'}`)}
-    </Link>
+    </div>
   );
 }
 export default CommentsStatistics;

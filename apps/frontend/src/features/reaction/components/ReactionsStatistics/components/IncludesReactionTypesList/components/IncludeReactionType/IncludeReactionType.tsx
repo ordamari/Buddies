@@ -8,6 +8,7 @@ type privateProps = {
 };
 
 function IncludeReactionType({ type, users }: privateProps) {
-  return <li className="reaction-type">{getEmojiFromReactionType(type)}</li>;
+  const emoji = getEmojiFromReactionType(type);
+  return <li className="reaction-type">{emoji}</li>;
 }
 export default IncludeReactionType;

@@ -6,7 +6,7 @@ import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { UsersService } from 'src/users/services/users/users.service';
 import { Inject, ParseIntPipe } from '@nestjs/common';
 import { UserInputError } from '@nestjs/apollo';
-import { QueryAndFilterInput } from 'src/common/query-and-filter.input';
+import { PaginatorFilterInput } from 'src/common/dto/paginator-filter.input';
 
 @Resolver()
 export class UsersResolver {
@@ -22,7 +22,7 @@ export class UsersResolver {
   @Query(() => [User], { name: 'users' })
   async findByQuery(
     @ActiveUser() activeUser: ActiveUserData,
-    @Args('queryAndFilter') queryAndFilter: QueryAndFilterInput,
+    @Args('queryAndFilter') queryAndFilter: PaginatorFilterInput,
   ) {
     return this.usersService.findByQuery(queryAndFilter, activeUser.sub);
   }

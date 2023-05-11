@@ -4,6 +4,7 @@
     .comments-statistics {
         color: var(--light-color);
         text-decoration: none;
+        cursor: pointer;
 
         &:hover {
             text-decoration: underline;

@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional } from 'class-validator';
 
 @InputType()
-export class QueryAndFilterInput {
+export class PaginatorFilterInput {
   @IsOptional()
   @Field(() => Number, { nullable: true })
   limit: number;
@@ -13,5 +13,5 @@ export class QueryAndFilterInput {
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  query: string;
+  search: string;
 }

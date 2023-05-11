@@ -5,7 +5,7 @@ import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { FileUpload } from 'graphql-upload';
-import { QueryAndFilterInput } from 'src/common/query-and-filter.input';
+import { PaginatorFilterInput } from 'src/common/dto/paginator-filter.input';
 
 @Injectable()
 export class UsersService {
@@ -121,8 +121,8 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async findByQuery(queryAndFilter: QueryAndFilterInput, userId: number) {
-    const { query, offset, limit } = queryAndFilter;
+  async findByQuery(queryAndFilter: PaginatorFilterInput, userId: number) {
+    const { search, offset, limit } = queryAndFilter;
     console.log({ userId });
 
     const users = await this.userRepository
@@ -131,7 +131,7 @@ export class UsersService {
       .where(
         '(LOWER(user.firstName) LIKE :searchString OR LOWER(user.lastName) LIKE :searchString)',
         {
-          searchString: `%${query.toLowerCase()}%`,
+          searchString: `%${search.toLowerCase()}%`,
         },
       )
       .andWhere('user.id != :userId', { userId: userId.toString() })

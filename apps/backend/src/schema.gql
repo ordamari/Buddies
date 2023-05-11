@@ -68,14 +68,14 @@ type Query {
   posts: [Post!]!
   post(id: ID!): Post!
   loggedInUser: User!
-  users(queryAndFilter: QueryAndFilterInput!): [User!]!
+  users(queryAndFilter: PaginatorFilterInput!): [User!]!
   user(id: ID!): User!
 }
 
-input QueryAndFilterInput {
+input PaginatorFilterInput {
   limit: Float
   offset: Float
-  query: String
+  search: String
 }
 
 type Mutation {
