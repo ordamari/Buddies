@@ -11,7 +11,10 @@ async function bootstrap() {
   app.use(graphqlUploadExpress());
   app.enableCors({
     credentials: true,
-    origin: 'http://localhost:3001',
+    origin: [
+      'http://localhost:3001',
+      'https://buddies-frontend-k2iyiatma-ordamari.vercel.app',
+    ],
   });
   await app.listen(3000);
 }
