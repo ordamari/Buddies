@@ -28,6 +28,12 @@ function AuthGuard({ children }: privateProps) {
     }
   }, [userHandler.data]);
 
+  useEffect(() => {
+    if (userHandler.error) {
+      router.push('/authentication');
+    }
+  }, [userHandler.error]);
+
   if (auth.accessTokenExpires && userHandler.data) {
     return <>{children}</>;
   }

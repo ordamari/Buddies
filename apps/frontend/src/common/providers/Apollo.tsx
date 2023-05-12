@@ -44,7 +44,7 @@ const logoutLink = onError(({ networkError }) => {
 const refreshTokenMiddleware = new ApolloLink((operation, forward) => {
   const accessTokenExpires = store.getState().auth.accessTokenExpires;
   if (
-    !accessTokenExpires ||
+    accessTokenExpires &&
     accessTokenExpires.getTime() < new Date().getTime()
   ) {
     refreshToken().then((res) => {

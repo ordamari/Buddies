@@ -4,7 +4,7 @@ import { GET_USERS } from '@/features/user/graphQL';
 import { useQuery } from '@apollo/client';
 
 function UsersPage() {
-  const usersHandler = useQuery(GET_USERS, { variables: { query: '' } });
+  const usersHandler = useQuery(GET_USERS, { variables: { search: '' } });
 
   return (
     <AuthGuard>

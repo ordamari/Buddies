@@ -64,8 +64,8 @@ export const GET_LOGGED_IN_USER = gql`
 `;
 
 export const GET_USERS = gql`
-  query Users($query: String, $limit: Float, $offset: Float) {
-    users(queryAndFilter: { query: $query, limit: $limit, offset: $offset }) {
+  query Users($search: String, $limit: Float, $offset: Float) {
+    users(queryAndFilter: { search: $search, limit: $limit, offset: $offset }) {
       id
       firstName
       lastName
