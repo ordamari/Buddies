@@ -20,10 +20,12 @@ import redisConfig from 'src/redis/config/redis.config';
 import googleConfig from './config/google.config';
 import cloudinaryConfig from 'src/cloudinary/config/cloudinary.config';
 import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
+import { MediaFileService } from 'src/media-file/services/media-file/media-file.service';
+import { MediaFile } from 'src/media-file/entities/media-file.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, MediaFile]),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(redisConfig),
@@ -43,6 +45,7 @@ import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary
     AccessTokenGuard,
     RefreshTokenIdsStorage,
     AuthenticationService,
+    MediaFileService,
     UsersService,
     RedisService,
     GoogleAuthenticationService,

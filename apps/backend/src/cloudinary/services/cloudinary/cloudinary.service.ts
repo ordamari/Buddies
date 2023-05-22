@@ -17,7 +17,7 @@ export class CloudinaryService {
     });
   }
 
-  async uploadImage(
+  async uploadFile(
     fileUpload: FileUpload,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
     return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ export class CloudinaryService {
     });
   }
 
-  async deleteImage(publicId: string) {
+  async deleteFile(publicId: string) {
     return v2.uploader.destroy(publicId);
   }
 }

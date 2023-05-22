@@ -12,8 +12,8 @@ import { IamModule } from './iam/iam.module';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { FilesModule } from './files/files.module';
 import { ReactionsModule } from './reactions/reactions.module';
+import { MediaFileModule } from './media-file/media-file.module';
 import * as Joi from '@hapi/joi';
 @Module({
   imports: [
@@ -61,8 +61,8 @@ import * as Joi from '@hapi/joi';
     IamModule,
     RedisModule,
     CloudinaryModule,
-    FilesModule,
     ReactionsModule,
+    MediaFileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
