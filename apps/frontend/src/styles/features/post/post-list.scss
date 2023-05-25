@@ -4,3 +4,14 @@
     gap: var(--medium-gap);
     padding-block: var(--medium-gap);
 }
+
+.no-posts {
+    padding-block: var(--extra-large-gap);
+    text-align: center;
+    color: var(--light-gray);
+    font-size: var(--small-font-size);
+
+    h2 {
+        font-size: var(--medium-font-size);
+    }
+}

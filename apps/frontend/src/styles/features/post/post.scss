@@ -1,6 +1,34 @@
-.post {
+.post,
+.post-placeholder {
     background-color: var(--near-background-color);
     border-radius: var(--medium-border-radius);
     padding: var(--large-gap) var(--large-gap) 0 var(--large-gap);
     box-shadow: var(--box-shadow);
+}
+
+.content-placeholder-container {
+    display: flex;
+    gap: 3px;
+    flex-direction: column;
+    padding-bottom: 16px;
+
+
+    .content.placeholder {
+        height: 21px;
+        background-color: var(--background-color);
+        border-radius: 99px;
+
+        &:nth-child(1) {
+            width: 90%;
+        }
+
+        &:nth-child(2) {
+            width: 92%;
+        }
+
+        &:nth-child(3) {
+            width: 87%;
+        }
+
+    }
 }

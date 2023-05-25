@@ -1,5 +1,6 @@
 .user-profile-header-placeholder,
 .user-profile-header {
+    margin-top: calc(-1 * var(--small-gap));
 
     background-color: var(--near-background-color);
     background: linear-gradient(45deg, var(--near-background-color) 80%, var(--primary-color-opacity) 90%);

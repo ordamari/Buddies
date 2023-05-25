@@ -9,3 +9,14 @@
         grid-template-columns: repeat(1, 1fr);
     }
 }
+
+.no-user {
+    padding-block: var(--extra-large-gap);
+    text-align: center;
+    color: var(--light-gray);
+    font-size: var(--small-font-size);
+
+    h2 {
+        font-size: var(--medium-font-size);
+    }
+}

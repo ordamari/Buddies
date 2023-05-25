@@ -18,7 +18,8 @@
     "like": "Like",
     "comment": "Comment",
     "comments": "Comments",
-    "postForm": "What's on your mind?"
+    "postForm": "What's on your mind?",
+    "notFound": "Not found posts"
   },
   "authentication": {
     "email": "Email",
@@ -37,7 +38,8 @@
     "friends": "Friends",
     "already-friend": "Already Friend",
     "add-friend": "Add Friend",
-    "find-friends": "Find Friends"
+    "find-friends": "Find Friends",
+    "notFound": "Not found users"
   },
   "general": {
     "and": "and",
