@@ -16,9 +16,19 @@ function AuthGuard({ children }: privateProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  console.log({ auth, userHandler });
+
   useEffect(() => {
     if (!!auth.accessTokenExpires && userHandler.error) {
       router.push('/authentication');
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (!auth.accessTokenExpires) {
+      console.log('no auth');
+
+      userHandler.refetch();
     }
   }, [auth]);
 
@@ -27,6 +37,12 @@ function AuthGuard({ children }: privateProps) {
       dispatch(setLoggedInUser(userHandler.data.loggedInUser));
     }
   }, [userHandler.data]);
+
+  useEffect(() => {
+    if (userHandler.error) {
+      router.push('/authentication');
+    }
+  }, [userHandler.error]);
 
   if (auth.accessTokenExpires && userHandler.data) {
     return <>{children}</>;

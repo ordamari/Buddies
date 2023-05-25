@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class File {
+export class MediaFile {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
@@ -16,4 +16,10 @@ export class File {
 
   @Column()
   secure_url: string;
+
+  @Column()
+  mimeType: string;
+
+  @Column()
+  identifier: string;
 }

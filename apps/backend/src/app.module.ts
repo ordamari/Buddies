@@ -12,8 +12,8 @@ import { IamModule } from './iam/iam.module';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { FilesModule } from './files/files.module';
 import { ReactionsModule } from './reactions/reactions.module';
+import { MediaFileModule } from './media-file/media-file.module';
 import * as Joi from '@hapi/joi';
 @Module({
   imports: [
@@ -24,6 +24,7 @@ import * as Joi from '@hapi/joi';
         DATABASE_USER: Joi.string().required(),
         DATABASE_PASSWORD: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
+        DATABASE_ENV: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_TOKEN_AUDIENCE: Joi.string().required(),
         JWT_TOKEN_ISSUER: Joi.string().required(),
@@ -47,7 +48,7 @@ import * as Joi from '@hapi/joi';
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
-      ssl: true,
+      ssl: process.env.DATABASE_ENV === 'production',
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -60,8 +61,8 @@ import * as Joi from '@hapi/joi';
     IamModule,
     RedisModule,
     CloudinaryModule,
-    FilesModule,
     ReactionsModule,
+    MediaFileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

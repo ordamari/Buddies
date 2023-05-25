@@ -6,7 +6,7 @@ type PrivateProps = {
 
 function PostListPlaceholder({ length = 5 }: PrivateProps) {
   return (
-    <ul>
+    <ul className="post-list">
       {Array.from({ length }, (_, i) => (
         <PostPlaceholder key={i} />
       ))}

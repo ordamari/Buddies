@@ -1,11 +1,15 @@
 import useTranslation from '@/common/hooks/useTranslation';
 
-function NoUsers() {
+type PrivateProps = {
+  description?: string;
+};
+
+function NoUsers({ description = '' }: PrivateProps) {
   const t = useTranslation();
   return (
-    <div className="text-center">
-      <h2>{t('No users found')}</h2>
-      <p>{t('No users found description')}</p>
+    <div className="no-user">
+      <h2>{t('user.notFound')}</h2>
+      {description && <p>{description}</p>}
     </div>
   );
 }

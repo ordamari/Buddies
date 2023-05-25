@@ -11,10 +11,12 @@ import cloudinaryConfig from 'src/cloudinary/config/cloudinary.config';
 import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 import { UsersService } from 'src/users/services/users/users.service';
 import { Reaction } from 'src/reactions/entities/reaction.entity';
+import { MediaFile } from 'src/media-file/entities/media-file.entity';
+import { MediaFileService } from 'src/media-file/services/media-file/media-file.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, Comment, User, Reaction]),
+    TypeOrmModule.forFeature([Post, Comment, User, Reaction, MediaFile]),
     ConfigModule.forFeature(cloudinaryConfig),
   ],
   providers: [
@@ -22,6 +24,7 @@ import { Reaction } from 'src/reactions/entities/reaction.entity';
     PostsService,
     CommentsService,
     CloudinaryService,
+    MediaFileService,
     UsersService,
   ],
 })

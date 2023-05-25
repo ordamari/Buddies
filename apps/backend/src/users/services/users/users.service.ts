@@ -1,18 +1,18 @@
 import { UserInputError } from '@nestjs/apollo';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CloudinaryService } from 'src/cloudinary/services/cloudinary/cloudinary.service';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { FileUpload } from 'graphql-upload';
 import { PaginatorFilterInput } from 'src/common/dto/paginator-filter.input';
+import { MediaFileService } from 'src/media-file/services/media-file/media-file.service';
 
 @Injectable()
 export class UsersService {
   @InjectRepository(User)
   private readonly userRepository!: Repository<User>;
-  @Inject(CloudinaryService)
-  private readonly cloudinaryService!: CloudinaryService;
+  @Inject(MediaFileService)
+  private readonly mediaFileService!: MediaFileService;
 
   create(
     email: string,
@@ -89,24 +89,36 @@ export class UsersService {
   }
 
   async updateProfileImageUrl(userId: number, fileUpload: FileUpload) {
-    const res = await this.cloudinaryService.uploadImage(fileUpload);
-    if (res.error) throw new UserInputError(res.error.message);
-    const user = await this.userRepository.preload({
-      id: userId,
-      profileImageUrl: res.secure_url,
-    });
+    const user = await this.findById(userId);
     if (!user) throw new UserInputError('User not found');
+    const profileImageIdentifier = this.mediaFileService.getIdentifierFromUrl(
+      user.profileImageUrl,
+    );
+    const newProfileImageIdentifier = await this.mediaFileService.uploadFile(
+      fileUpload,
+    );
+    user.profileImageUrl = this.mediaFileService.createUrlFromIdentifier(
+      newProfileImageIdentifier,
+    );
+    if (profileImageIdentifier)
+      this.mediaFileService.deleteFile(profileImageIdentifier);
     return this.userRepository.save(user);
   }
 
   async updateCoverImageUrl(userId: number, fileUpload: FileUpload) {
-    const res = await this.cloudinaryService.uploadImage(fileUpload);
-    if (res.error) throw new UserInputError(res.error.message);
-    const user = await this.userRepository.preload({
-      id: userId,
-      coverImageUrl: res.secure_url,
-    });
+    const user = await this.findById(userId);
     if (!user) throw new UserInputError('User not found');
+    const coverImageIdentifier = this.mediaFileService.getIdentifierFromUrl(
+      user.coverImageUrl,
+    );
+    const newCoverImageIdentifier = await this.mediaFileService.uploadFile(
+      fileUpload,
+    );
+    user.coverImageUrl = this.mediaFileService.createUrlFromIdentifier(
+      newCoverImageIdentifier,
+    );
+    if (coverImageIdentifier)
+      this.mediaFileService.deleteFile(coverImageIdentifier);
     return this.userRepository.save(user);
   }
 
