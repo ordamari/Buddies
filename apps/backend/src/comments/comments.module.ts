@@ -10,10 +10,12 @@ import { UsersService } from 'src/users/services/users/users.service';
 import { Comment } from './entities/comment.entity';
 import { CommentsService } from './services/comments/comments.service';
 import { CommentsResolver } from './resolvers/comments/comments.resolver';
+import { MediaFileService } from 'src/media-file/services/media-file/media-file.service';
+import { MediaFile } from 'src/media-file/entities/media-file.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Comment, Post, User]),
+    TypeOrmModule.forFeature([Comment, Post, User, MediaFile]),
     ConfigModule.forFeature(cloudinaryConfig),
   ],
   providers: [
@@ -21,6 +23,7 @@ import { CommentsResolver } from './resolvers/comments/comments.resolver';
     PostsService,
     UsersService,
     CloudinaryService,
+    MediaFileService,
     CommentsResolver,
   ],
 })

@@ -1,4 +1,5 @@
-.post .header {
+.post .header,
+.post-placeholder .header {
     display: flex;
     align-items: flex-end;
     gap: var(--small-gap);
@@ -6,20 +7,38 @@
     text-decoration: none;
     padding-bottom: var(--large-gap);
 
+    .profile-image-placeholder,
     img {
         border-radius: 50%;
         object-fit: cover;
+        width: 40px;
+        height: 40px;
     }
 
     .info {
         .name {
             font-weight: var(--bold);
             font-size: var(--medium-font-size);
+
+            &.placeholder {
+                height: 21px;
+                width: 100px;
+                background-color: var(--background-color);
+                border-radius: 999px;
+            }
         }
 
         .date {
             font-size: var(--small-font-size);
             color: var(--light-color);
+
+            &.placeholder {
+                height: 15px;
+                width: 40px;
+                background-color: var(--background-color);
+                border-radius: 999px;
+                margin-top: 3px;
+            }
         }
 
     }

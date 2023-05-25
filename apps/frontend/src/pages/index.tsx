@@ -19,7 +19,7 @@ function FeedPage() {
   const sortedPostsByDates = postsActions.getSortedByDates('createdAt', true);
   return (
     <AuthGuard>
-      <div className="post-page">
+      <div className="home-page page">
         <PostForm afterSubmit={postsActions.add} />
         <PostList
           error={postsHandler.error}

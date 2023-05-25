@@ -16,9 +16,19 @@ function AuthGuard({ children }: privateProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  console.log({ auth, userHandler });
+
   useEffect(() => {
     if (!!auth.accessTokenExpires && userHandler.error) {
       router.push('/authentication');
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (!auth.accessTokenExpires) {
+      console.log('no auth');
+
+      userHandler.refetch();
     }
   }, [auth]);
 

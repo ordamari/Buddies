@@ -8,12 +8,19 @@ type privateProps = {
   posts: TypePost[];
   error?: ApolloError | undefined;
   isLoading?: boolean;
+  notFoundDescription?: string;
 };
 
-function PostList({ posts, error, isLoading }: privateProps) {
+function PostList({
+  posts,
+  error,
+  isLoading,
+  notFoundDescription,
+}: privateProps) {
   if (isLoading) return <PostListPlaceholder />;
   if (error) return <div className="error">{error.message}</div>;
-  if (posts.length === 0) return <NoPosts />;
+  if (posts.length === 0)
+    return <NoPosts notFoundDescription={notFoundDescription} />;
   return (
     <ul className="post-list">
       {posts.map((post) => {

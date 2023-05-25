@@ -1,11 +1,16 @@
 import useTranslation from '@/common/hooks/useTranslation';
 
-function NoPosts() {
+type PrivateProps = {
+  notFoundDescription?: string;
+};
+
+function NoPosts({ notFoundDescription }: PrivateProps) {
   const t = useTranslation();
+
   return (
-    <div className="text-center">
-      <h2>{t('No posts found')}</h2>
-      <p>{t('No posts found description')}</p>
+    <div className="no-posts">
+      <h2>{t('post.notFound')}</h2>
+      <p>{notFoundDescription}</p>
     </div>
   );
 }

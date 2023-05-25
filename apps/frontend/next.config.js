@@ -25,6 +25,6 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ['res.cloudinary.com', 'lh3.googleusercontent.com'],
+    domains: ['res.cloudinary.com', 'lh3.googleusercontent.com', 'localhost'],
   },
 };
