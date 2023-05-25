@@ -34,7 +34,7 @@ export class AuthenticationService {
   private cookieOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: 'strict',
+    sameSite: 'none',
   } as CookieOptions;
 
   async signUp(signUpInput: SignUpInput) {
