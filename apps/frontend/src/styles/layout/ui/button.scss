@@ -9,6 +9,8 @@ div.button {
     border: none;
     border-radius: var(--large-border-radius);
     text-decoration: none;
+    white-space: nowrap;
+
 
     &.icon {
         display: flex;
