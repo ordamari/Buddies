@@ -1,3 +1,5 @@
+import ReadMoreLess from '@/common/components/ReadMoreLess/ReadMoreLess';
+
 type PrivateProps = {
   text: string;
 };
@@ -5,7 +7,7 @@ type PrivateProps = {
 function PostContent({ text }: PrivateProps) {
   return (
     <div className="content">
-      <p>{text}</p>
+      <ReadMoreLess>{text}</ReadMoreLess>
     </div>
   );
 }

@@ -43,6 +43,8 @@
   },
   "general": {
     "and": "and",
-    "others": "others"
+    "others": "others",
+    "read-more": "Read more",
+    "read-less": "Read less"
   }
 }

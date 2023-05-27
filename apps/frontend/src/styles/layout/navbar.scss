@@ -13,6 +13,8 @@ nav {
             justify-content: center;
 
             img {
+                width: var(--large-font-size);
+                height: var(--large-font-size);
                 border-radius: 50%;
             }
         }
@@ -45,8 +47,8 @@ nav {
                 }
 
                 svg {
-                    width: 40px;
-                    height: 40px;
+                    width: var(--large-font-size);
+                    height: var(--large-font-size);
                 }
 
                 .name {
