@@ -1,3 +1,5 @@
+$narrow-breakpoint: 720px;
+
 .user-profile-header-placeholder,
 .user-profile-header {
     margin-top: calc(-1 * var(--small-gap));
@@ -16,6 +18,11 @@
             object-fit: cover;
             border-bottom-left-radius: var(--large-border-radius);
             border-bottom-right-radius: var(--large-border-radius);
+
+
+            @media (max-width: $narrow-breakpoint) {
+                height: 150px;
+            }
         }
 
         .button-placeholder,
@@ -27,10 +34,15 @@
         }
     }
 
+
+
+
     .image-and-info-wrapper-placeholder,
     .image-and-info-wrapper {
         position: relative;
         top: -50px;
+
+
 
         .profile-image-container-placeholder,
         .profile-image-container {
@@ -44,6 +56,12 @@
                 object-fit: cover;
                 padding: var(--small-gap);
                 background-color: var(--near-background-color);
+
+                @media (max-width: $narrow-breakpoint) {
+                    width: 150px;
+                    height: 150px;
+                }
+
             }
 
             .profile-image-input {
@@ -75,6 +93,11 @@
             .full-name {
                 font-size: var(--extra-large-font-size);
                 font-weight: var(--bold);
+                white-space: nowrap;
+
+                @media (max-width: $narrow-breakpoint) {
+                    font-size: var(--large-font-size);
+                }
             }
         }
     }
